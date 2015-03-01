@@ -1,5 +1,5 @@
 var mongoose = require('mongoose'),
-crypto = require('crytp'),
+crypto = require('crypto'),
 Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
@@ -38,7 +38,7 @@ var UserSchema = new Schema({
 	salt:{
 		type: String
 	},
-	provider{
+	provider:{
 		type:String,
 		required: 'Provider is required'
 	},
@@ -85,7 +85,7 @@ UserSchema.methods.hashPassword = function(password) {
 };
 
 UserSchema.methods.authenticate = function(password){
-	return this.password === hashPassword(password);
+	return this.password === this.hashPassword(password);
 };
 
 UserSchema.statics.findOneByUsername = function(username, callback){
