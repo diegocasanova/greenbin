@@ -25,6 +25,33 @@ var getErrorMessage = function(err){
 };
 
 
+exports.saveOAuthUserProfile = function(req, profile, done) {
+	User.findOne({
+		provider: profile.provider,
+		providerId: profile.providerId
+	}, function(err, user) {
+		if (err) {
+			return done(err);
+		} else {
+			if (!user) {
+				var possibleUsername = profile.username || ((profile.email) ?
+					profile.email.split('@')[0] : '') || profile.firstName + '.' + profile.lastName;
+				User.findUniqueUsername(possibleUsername, null,
+					function(availableUsername) {
+						profile.username = availableUsername;
+						user = new User(profile);
+						user.save(function(err) {
+							return done(err, user);
+						});
+					});
+			} else {
+				return done(err, user);
+			}
+		}
+	});
+};
+
+
 exports.renderSignin = function(req, res, next) {
 	if (!req.user) {
 		res.render('signin', {
