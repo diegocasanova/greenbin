@@ -4,15 +4,24 @@
 <title><%= title %></title>
 </head>
 <body>
+<img src="img/logo.jpg" alt="Logo"><br>
 <% if ( username ) { %>
 <h2>Hello <%=username%> </h2>
 <a href="/signout">Sign out</a>
+<form id        =  "uploadForm"
+     enctype   =  "multipart/form-data"
+     action    =  "/api/photo"
+     method    =  "post"
+>
+<input type="file" name="userPhoto" />
+<input type="submit" value="Upload Image" name="submit">
 <% } else { %>
 <a href="/signup">Signup</a>
 <a href="/signin">Signin</a>
 <% } %>
 <br>
-<img src="img/logo.jpg" alt="Logo">
-<h1><%= title %></h1>
+
+
+</form>
 </body>
 </html>
