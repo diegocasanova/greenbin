@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:ng="http://angularjs.org">
 <head>
 <title><%= title %></title>
 </head>
 <body>
-<img src="img/logo.jpg" alt="Logo"><br>
+<!--img src="img/logo.jpg" alt="Logo"><br-->
 <% if ( username ) { %>
 <h2>Hello <%=username%> </h2>
 <a href="/signout">Sign out</a>
@@ -21,7 +21,14 @@
 <% } %>
 <br>
 
+<section>
+<input type="text" id="text1" ng-model="name">
+<input type="text" id="text2" ng-model="name">
+</section>
+
 
 </form>
+<script type="text/javascript" src="/lib/angular/angular.js"></script>
+<script type="text/javascript" src="/application.js"></script>
 </body>
 </html>
