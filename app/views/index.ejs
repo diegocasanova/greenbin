@@ -5,8 +5,8 @@
 </head>
 <body>
 <!--img src="img/logo.jpg" alt="Logo"><br-->
-<% if ( username ) { %>
-<h2>Hello <%=username%> </h2>
+<% if ( user ) { %>
+<h2>Hello <%=user.fullName%> </h2>
 <a href="/signout">Sign out</a>
 <form id        =  "uploadForm"
      enctype   =  "multipart/form-data"
@@ -20,15 +20,30 @@
 <a href="/signin">Signin</a>
 <% } %>
 <br>
-
-<section>
-<input type="text" id="text1" ng-model="name">
-<input type="text" id="text2" ng-model="name">
-</section>
-
-
 </form>
+
+<section ng-view></section>
+
+<script type="text/javascript">
+	window.user = <%- user || 'null' %>;
+</script>
+
+
+<!-- angular libs -->
 <script type="text/javascript" src="/lib/angular/angular.js"></script>
+<script type="text/javascript" src="/lib/angular-route/angular-route.js"></script>
+<script type="text/javascript" src="/lib/angular-resource/angular-resource.js"></script>
+
+<!-- example -->
+<script type="text/javascript" src="/example/example.client.module.js"></script>
+<script type="text/javascript" src="/example/controllers/example.client.controller.js"></script>
+<script type="text/javascript" src="/example/config/example.client.routes.js"></script>
+
+<!-- users -->
+<script type="text/javascript" src="/users/users.client.module.js"></script>
+<script type="text/javascript" src="/users/services/authentication.client.service.js"></script>
+
+<!-- angular bootstrap -->
 <script type="text/javascript" src="/application.js"></script>
 </body>
 </html>

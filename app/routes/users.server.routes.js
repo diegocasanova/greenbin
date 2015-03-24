@@ -48,7 +48,7 @@ module.exports = function(app){
 		successRedirect: '/'
 	}));
 
-	app.route('/users')
+	/*app.route('/users')
 	.post(users.create)
 	.get(users.list);
 
@@ -58,7 +58,7 @@ module.exports = function(app){
 	.put(users.update)
 	.delete(users.delete);
 
-	app.param('userId', users.userById);
+	app.param('userId', users.userById);*/
 
 
 };

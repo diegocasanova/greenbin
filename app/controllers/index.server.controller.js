@@ -8,6 +8,6 @@ exports.render = function (req, res) {
 
 	res.render('index', {
 		title: 'Hello',
-		username: req.user ? req.user.username : ''
+		user: JSON.stringify(req.user)
 	});
 }
