@@ -4,23 +4,6 @@
 <title><%= title %></title>
 </head>
 <body>
-<!--img src="img/logo.jpg" alt="Logo"><br-->
-<% if ( user ) { %>
-<h2>Hello <%=user.fullName%> </h2>
-<a href="/signout">Sign out</a>
-<form id        =  "uploadForm"
-     enctype   =  "multipart/form-data"
-     action    =  "/api/photo"
-     method    =  "post"
->
-<input type="file" name="userPhoto" />
-<input type="submit" value="Upload Image" name="submit">
-<% } else { %>
-<a href="/signup">Signup</a>
-<a href="/signin">Signin</a>
-<% } %>
-<br>
-</form>
 
 <section ng-view></section>
 
@@ -33,6 +16,12 @@
 <script type="text/javascript" src="/lib/angular/angular.js"></script>
 <script type="text/javascript" src="/lib/angular-route/angular-route.js"></script>
 <script type="text/javascript" src="/lib/angular-resource/angular-resource.js"></script>
+
+<!-- articles -->
+<script type="text/javascript" src="/articles/articles.client.module.js"></script>
+<script type="text/javascript" src="/articles/controllers/articles.client.controller.js"></script>
+<script type="text/javascript" src="/articles/services/articles.client.service.js"></script>
+<script type="text/javascript" src="/articles/config/articles.client.routes.js"></script>
 
 <!-- example -->
 <script type="text/javascript" src="/example/example.client.module.js"></script>
