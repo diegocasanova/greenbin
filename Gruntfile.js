@@ -19,23 +19,21 @@ module.exports = function(grunt) {
 		},
 		jshint: {
 			all: {
-				src: ['server.js', 'config/**/*.js', 'app/**/*.js',
-				'public/js/*.js', 'public/modules/**/*.js']
+				src: ['server.js', 'config/**/*.js', 'app/**/*.js', 'public/**/*.js', '!public/lib/**/*.js']
 			}
 		},
 		csslint: {
 			all: {
-				src: 'public/modules/**/*.css'
+				src: ['public/**/*.css', '!public/lib/**/*.css']
 			}
 		},
 	watch: {
 		js: {
-			files: ['server.js', 'config/**/*.js', 'app/**/*.js',
-			'public/js/*.js', 'public/modules/**/*.js'],
+			files: ['server.js', 'config/**/*.js', 'app/**/*.js'],
 			tasks: ['jshint']
 		},
 		css: {
-			files: 'public/modules/**/*.css',
+			files: ['public/**/*.css','!public/lib/*'],
 			tasks: ['csslint']
 		}
 	},

@@ -1,0 +1,43 @@
+<div>
+	<!--<% for(var i in messages) { %>
+	<div class="flash"><%= messages[i] %></div>
+	<% } %>-->
+	<form action="/signin" method="post">
+		<div>
+			<label>Username:</label>
+			<input type="text" name="username" />
+		</div>
+		<div>
+			<label>Password:</label>
+			<input type="password" name="password" />
+		</div>
+		<div><input type="submit" value="Sign In" />
+		</div>
+	</form>
+	<a href="/oauth/facebook">Sign in with Facebook</a>
+	<a href="/oauth/twitter">Sign in with Twitter</a>
+	<a href="/oauth/google">Sign in with Google</a>
+</div>
+
+
+
+
+<form name="form" novalidate class="login-form" ng-submit='login()' ng-controller='LoginCtrl'>
+    <div class="modal-header">
+        <h4>Sign in</h4>
+    </div>
+    <div class="modal-body">
+        <div  ng-show="authError">
+            <p class="bg-danger">{{authError}}</p>
+        </div>
+        <div class="alert alert-info">Please enter your login details</div>
+        <label>E-mail</label>
+        <input name="login" type="email" ng-model="user.username" required autofocus>
+        <label>Password</label>
+        <input name="pass" type="password" ng-model="user.password" required>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary login" ng-click="login()" ng-disabled='form.$invalid'>Sign in</button>
+        <button class="btn clear" ng-click="clearForm()">Clear</button>
+    </div>
+</form>

@@ -4,16 +4,19 @@ passport = require('passport');
 module.exports = function(app){
 
 	app.route('/signup')
-	.get(users.renderSignup)
+	//.get(users.renderSignup)
 	.post(users.signup);
 
 	app.route('/signin')
-	.get(users.renderSignin)
-	.post(passport.authenticate('local', {
+	//.get(users.renderSignin)
+	.post(
+		/*passport.authenticate('local', {
 		successRedirect: '/',
-		failureRedirect: '/signin',
+		failureRedirect: '/#!/signin',
 		failureFlash: true
-	}));
+	})*/
+	users.login
+	);
 
 	app.get('/signout', users.signout);
 

@@ -1,5 +1,5 @@
 var mainApplicationModuleName = 'mean';
-var mainApplicationModule = angular.module(mainApplicationModuleName, ['ngResource','ngRoute', 'users', 'example','articles']);
+var mainApplicationModule = angular.module(mainApplicationModuleName, ['ngResource','ngRoute','example','articles','users', 'common']);
 
 mainApplicationModule.config(['$locationProvider', function($locationProvider) {
     $locationProvider.hashPrefix('!');
