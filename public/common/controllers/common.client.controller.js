@@ -1,7 +1,7 @@
 angular.module('common').controller('HeaderCtrl', ['$scope', '$location','Authentication',
   function ($scope, $location, Authentication) {
 
-    Authentication.loggedUser = window.user;
+  Authentication.loggedUser = window.user;
 
   $scope.location = $location;
   $scope.isAuthenticated = Authentication.isAuthenticated;
