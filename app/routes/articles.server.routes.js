@@ -12,4 +12,8 @@ module.exports = function(app) {
         .delete(users.requiresLogin, articles.hasAuthorization,
             articles.delete);
     app.param('articleId', articles.articleByID);
+
+    app.route('/api/tags')
+        .get(articles.listTags);
+
 };

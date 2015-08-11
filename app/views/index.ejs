@@ -8,13 +8,14 @@
 
 	<link rel="stylesheet" type="text/css" href="lib/bootstrap/dist/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/greenbin.css">
+	<link rel="stylesheet" type="text/css" href="lib/ng-tags-input/ng-tags-input.css">
 
 </head>
 <body>
 
-	<script type="text/javascript">
+	<!--script type="text/javascript">
 		window.user = <%- user || 'null' %>;
-	</script>
+	</script-->
 
     
 	<div ng-include="'/common/views/header.tpl.html'"></div>
@@ -25,6 +26,10 @@
 	<script type="text/javascript" src="/lib/angular/angular.js"></script>
 	<script type="text/javascript" src="/lib/angular-route/angular-route.js"></script>
 	<script type="text/javascript" src="/lib/angular-resource/angular-resource.js"></script>
+
+	<!-- angular 3rd party directives -->
+	<script type="text/javascript" src="/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+	<script type="text/javascript" src="/lib/ng-tags-input/ng-tags-input.js"></script>
 
 	<!-- articles -->
 	<script type="text/javascript" src="/articles/articles.client.module.js"></script>

@@ -5,6 +5,8 @@
     "angular": "~1.4",
     "angular-route": "~1.4",
     "angular-resource": "~1.4",
-    "bootstrap": "~3.3.5"
+    "bootstrap": "~3.3.5",
+    "ng-tags-input": "~3.0.0",
+    "angular-bootstrap": "~0.13.3"
   }
 }

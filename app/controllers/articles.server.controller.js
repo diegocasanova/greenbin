@@ -1,18 +1,18 @@
 var mongoose = require('mongoose'),
-    Article = mongoose.model('Article');
+Article = mongoose.model('Article');
 
 
 var getErrorMessage = function(err) {
     if (err.errors) {
         for (var errName in err.errors) {
             if (err.errors[errName].message){
-             return err.errors[errName].message;
-            }
+               return err.errors[errName].message;
+           }
 
-        }
-    } else {
-        return 'Unknown server error';
-    }
+       }
+   } else {
+    return 'Unknown server error';
+}
 };
 
 
@@ -79,7 +79,7 @@ exports.articleByID = function(req, res, next, id) {
         if (err) return next(err);
         if (!article) return next(new Error('Failed to load article ' +
             id));
-        req.article = article;
+            req.article = article;
         next();
     });
 };
@@ -92,3 +92,24 @@ exports.hasAuthorization = function(req, res, next) {
     }
     next();
 };
+
+exports.listTags = function(req, res) {
+
+    var tags = [
+    { "text": "Tag1" },
+    { "text": "Tag2" },
+    { "text": "Tag3" },
+    { "text": "Tag4" },
+    { "text": "Tag5" },
+    { "text": "Tag6" },
+    { "text": "Tag7" },
+    { "text": "Tag8" },
+    { "text": "Tag9" },
+    { "text": "Tag10" }
+    ];
+
+    res.json(tags);
+};
+
+
+
