@@ -13,7 +13,7 @@ module.exports = function(grunt) {
 				script: 'server.js',
 				options: {
 					ext: 'js,html',
-					watch: ['server.js', 'config/**/*.js', 'app/**/*.js']
+					watch: ['server.js', 'config/**/*.js', 'app/**/*.js', 'public/**/*.js', '!public/lib/**/*.js']
 				}
 			}
 		},
@@ -29,7 +29,7 @@ module.exports = function(grunt) {
 		},
 	watch: {
 		js: {
-			files: ['server.js', 'config/**/*.js', 'app/**/*.js'],
+			files: ['server.js', 'config/**/*.js', 'app/**/*.js', 'public/**/*.js', '!public/lib/**/*.js'],
 			tasks: ['jshint']
 		},
 		css: {

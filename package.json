@@ -1,7 +1,7 @@
 {
-  "name": "MEAN",
+  "name": "Greenbin",
   "version": "0.0.3",
-  "description": "My First MEAN Application",
+  "description": "Greenbin",
   "main": "server.js",
   "dependencies": {
     "body-parser": "^1.10.1",

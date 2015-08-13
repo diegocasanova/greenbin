@@ -40,7 +40,7 @@
 						popover="Generally, a shorter title is better"  
 						popover-trigger="focus" 
 						class="form-control"
-						ng-model="title"
+						ng-model="article.title"
 						>
 				<hr></hr>
 			</div>
@@ -49,11 +49,7 @@
 				<h3>Item Condition</h3>
 				<div data-ng-controller="ButtonsCtrl">
 					<div class="btn-group">
-				        <label class="btn btn-danger btn-block" ng-model="data.ad.itemCondition" btn-radio="'1'">Need fixing</label>
-				        <label class="btn btn-warning btn-block" ng-model="data.ad.itemCondition" btn-radio="'2'">Need minimum repair</label>
-				        <label class="btn btn-success btn-block" ng-model="data.ad.itemCondition" btn-radio="'3'">Ready to use</label>
-				        <label class="btn btn-primary btn-block" ng-model="data.ad.itemCondition" btn-radio="'4'">Like brand new!</label>
-				        <p>{{data.ad.itemCondition}}</p>
+				        <label data-ng-repeat="condition in conditions" class="btn btn-default btn-block" ng-model="article.condition" btn-radio="'{{condition.value}}'">{{condition.label}}</label>
 				    </div>
 				</div>
 				<hr></hr>
@@ -66,7 +62,7 @@
 					   popover="Briefly explain pros and cons of this item"  
 					   popover-trigger="focus" 
 					   class="form-control"
-					   ng-model="description"
+					   ng-model="article.description"
 					   >
 				<hr></hr>
 			</div>
@@ -78,7 +74,7 @@
 				<h3>Item Location</h3>
 				<div data-ng-controller="AutocompleteLocationCtrl">
 					
-					    <input class="form-control" type="text" ng-model="data.ad.location"  ng-autocomplete options="options" details="details"/>
+					    <input class="form-control" type="text" ng-model="article.location"  ng-autocomplete options="options" details="details"/>
 					    
 						<p>autocomplete: {{data.ad.location}}</p>
 					    <p>details (formatted address): {{details.formatted_address}}</p>
@@ -90,7 +86,7 @@
 				<h3>Pick Up Date!</h3>
 				<div data-ng-controller="DatepickerDemoCtrl">
 				    <div style="display:inline-block; min-height:50px;">
-				        <datepicker ng-model="data.ad.pickUpDate" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
+				        <datepicker ng-model="article.pickupDate" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
 				    </div>
 				</div>
 				<hr></hr>    
@@ -102,11 +98,10 @@
 				<div class="col-md-2 text-center">	
 					
 						<h3>Between</h3>
-						<timepicker ng-model="data.ad.pickUpTimeFrom" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+						<timepicker ng-model="article.pickupTimeFrom" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
 						<h3>&</h3>
-						<timepicker ng-model="data.ad.pickUpTimeTo" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
-						<pre class="alert alert-info">Time is: {{mytime | date:'shortTime' }}</pre>
-				      
+						<timepicker ng-model="article.pickupTimeTo" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+
 				</div>    
 				</div>
 			
@@ -116,7 +111,7 @@
 			<div class="col-md-4 text-center">
 				<h3>Keywords / Tags</h3>
 				<div data-ng-controller="TagsMainCtrl">
-				    <tags-input ng-model="data.ad.tags" popover=""   popover-trigger="mouseenter">
+				    <tags-input ng-model="article.tags" popover=""   popover-trigger="mouseenter">
 				      <auto-complete source="loadTags($query)"></auto-complete>
 				    </tags-input>
 				</div>
@@ -124,12 +119,12 @@
 			</div>
 			<div class="col-md-4 text-center">
 				<h3>Contact Number</h3>
-				<input type="text" ng-model="data.ad.contactNumber" placeholder="Exmple: 0486556622" class="form-control" >
+				<input type="text" ng-model="article.contactNumber" placeholder="Exmple: 0486556622" class="form-control" >
 				<hr></hr>
 			</div>
 			<div class="col-md-4 text-center">
 				<h3>Email</h3>
-				<input type="email" name="email" placeholder="email@email.com.au" class="form-control" ng-model="data.ad.email">
+				<input type="email" name="article.email" placeholder="email@email.com.au" class="form-control" ng-model="email">
 				<hr></hr>
 			</div>
 		</div>
@@ -140,5 +135,9 @@
 				<hr></hr>
 			</div>			
 		</div>
+
+		<div  ng-show="error">
+            <p class="bg-danger">{{error}}</p>
+        </div>
 
 </div>

@@ -5,7 +5,11 @@ angular.module('articles').config(['$routeProvider',
 			templateUrl: 'articles/views/list-articles.client.view.html'
 		}).
 		when('/articles/create', {
-			templateUrl: 'articles/views/create-article.client.view.html'
+			templateUrl: 'articles/views/create-article.client.view.html',
+			access: {
+				requiresLogin: true
+
+			}
 		}).
 		when('/articles/:articleId', {
 			templateUrl: 'articles/views/view-article.client.view.html'

@@ -16,4 +16,7 @@ module.exports = function(app) {
     app.route('/api/tags')
         .get(articles.listTags);
 
+    app.route('/api/conditions')
+        .get(articles.listConditions);
+
 };

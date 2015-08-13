@@ -13,9 +13,9 @@
 </head>
 <body>
 
-	<!--script type="text/javascript">
+	<script type="text/javascript">
 		window.user = <%- user || 'null' %>;
-	</script-->
+	</script>
 
     
 	<div ng-include="'/common/views/header.tpl.html'"></div>
@@ -30,6 +30,8 @@
 	<!-- angular 3rd party directives -->
 	<script type="text/javascript" src="/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 	<script type="text/javascript" src="/lib/ng-tags-input/ng-tags-input.js"></script>
+	<script type="text/javascript" src="/lib/ngAutocomplete/src/ngAutocomplete.js"></script>
+
 
 	<!-- articles -->
 	<script type="text/javascript" src="/articles/articles.client.module.js"></script>
@@ -58,6 +60,8 @@
 	<script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 	<!-- angular bootstrap -->
 	<script type="text/javascript" src="/application.js"></script>
+	<!-- google maps -->
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script> 
 
 </body>
 </html>

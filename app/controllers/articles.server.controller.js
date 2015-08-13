@@ -1,5 +1,24 @@
 var mongoose = require('mongoose'),
-Article = mongoose.model('Article');
+Article = mongoose.model('Article'),
+tags = [
+    { "text": "Tag1" },
+    { "text": "Tag2" },
+    { "text": "Tag3" },
+    { "text": "Tag4" },
+    { "text": "Tag5" },
+    { "text": "Tag6" },
+    { "text": "Tag7" },
+    { "text": "Tag8" },
+    { "text": "Tag9" },
+    { "text": "Tag10" }
+    ],
+
+conditions = [    
+    { "value":"1", "label": "Need Fixing" },
+    { "value":"2", "label": "Need Minimun repair" },
+    { "value":"3", "label": "Ready to Use" },
+    { "value":"4", "label": "Like brand New!" }
+    ];
 
 
 var getErrorMessage = function(err) {
@@ -94,21 +113,11 @@ exports.hasAuthorization = function(req, res, next) {
 };
 
 exports.listTags = function(req, res) {
-
-    var tags = [
-    { "text": "Tag1" },
-    { "text": "Tag2" },
-    { "text": "Tag3" },
-    { "text": "Tag4" },
-    { "text": "Tag5" },
-    { "text": "Tag6" },
-    { "text": "Tag7" },
-    { "text": "Tag8" },
-    { "text": "Tag9" },
-    { "text": "Tag10" }
-    ];
-
     res.json(tags);
+};
+
+exports.listConditions = function(req, res) {
+    res.json(conditions);
 };
 
 
