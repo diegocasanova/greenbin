@@ -12,10 +12,13 @@
         <div id="navbar" class="navbar-collapse collapse" >
           <form class="navbar-form navbar-right" >
             <div class="form-group">
-              <a href="#!/signin" class="btn btn-success" role="button" ng-hide="isAuthenticated()">Log in</a>
+              <a ui-sref="login" class="btn btn-success" role="button" ng-hide="isAuthenticated()">Log in</a>
           	  <a href="/signout" class="btn btn-success" role="button" ng-show="isAuthenticated()">Log out</a>
             </div>
           </form>
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
+
+
+    <div ui-view></div>

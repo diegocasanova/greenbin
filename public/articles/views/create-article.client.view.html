@@ -25,119 +25,21 @@
 
 
 
+<div class="row">
+<div class="col-sm-8 col-sm-offset-2">
+
+  <div id="form-container">
 
 
-<div class="container" style="background-color: WhiteSmoke;" data-ng-controller="ArticlesCtrl">
-	<div>
-		<h2 style="background-color: #D3FFA7;">Post an Ad <small>Details</small></h2>
-	</div>
-		
-		<div class="row">
-			<div class="col-md-4 text-center">
-				<h3>Title</h3>
-				<input  type="text" 
-						placeholder="Exmple: Bicycle BMX Old School" 
-						popover="Generally, a shorter title is better"  
-						popover-trigger="focus" 
-						class="form-control"
-						ng-model="article.title"
-						>
-				<hr></hr>
-			</div>
+  	<div class="page-header text-center">
+          <h2>New Article!</h2>     
+     </div>
 
-			<div class="col-md-4 text-center">
-				<h3>Item Condition</h3>
-				<div data-ng-controller="ButtonsCtrl">
-					<div class="btn-group">
-				        <label data-ng-repeat="condition in conditions" class="btn btn-default btn-block" ng-model="article.condition" btn-radio="'{{condition.value}}'">{{condition.label}}</label>
-				    </div>
-				</div>
-				<hr></hr>
-			</div>
+      <!-- use ng-submit to catch the form submission and use our Angular function -->
+      <form id="signup-form" ng-submit="processForm()">
+          <!-- our nested state views will be injected here -->
+          <div id="form-views" ui-view></div>
+      </form>
 
-			<div class="col-md-4 text-center">
-				<h3>Description</h3>
-				<input type="text" 
-					   placeholder="Some description about the item..." 
-					   popover="Briefly explain pros and cons of this item"  
-					   popover-trigger="focus" 
-					   class="form-control"
-					   ng-model="article.description"
-					   >
-				<hr></hr>
-			</div>
-		</div>
-		
-		<div class="row">
-			
-			<div class="col-md-4 text-center">
-				<h3>Item Location</h3>
-				<div data-ng-controller="AutocompleteLocationCtrl">
-					
-					    <input class="form-control" type="text" ng-model="article.location"  ng-autocomplete options="options" details="details"/>
-					    
-						<p>autocomplete: {{data.ad.location}}</p>
-					    <p>details (formatted address): {{details.formatted_address}}</p>
-					    <p>details (lat lng): {{details.geometry.location}}</p>
-				</div>	
-				<hr></hr>	
-			</div>	
-			<div class="col-md-4 text-center">
-				<h3>Pick Up Date!</h3>
-				<div data-ng-controller="DatepickerDemoCtrl">
-				    <div style="display:inline-block; min-height:50px;">
-				        <datepicker ng-model="article.pickupDate" min-date="minDate" show-weeks="true" class="well well-sm"></datepicker>
-				    </div>
-				</div>
-				<hr></hr>    
-			</div>
-				<div class="col-md-1 text-center">	
-					
-				</div>	
-				<div data-ng-controller="TimepickerCtrl">
-				<div class="col-md-2 text-center">	
-					
-						<h3>Between</h3>
-						<timepicker ng-model="article.pickupTimeFrom" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
-						<h3>&</h3>
-						<timepicker ng-model="article.pickupTimeTo" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
-
-				</div>    
-				</div>
-			
-		</div>
-
-		<div class="row">
-			<div class="col-md-4 text-center">
-				<h3>Keywords / Tags</h3>
-				<div data-ng-controller="TagsMainCtrl">
-				    <tags-input ng-model="article.tags" popover=""   popover-trigger="mouseenter">
-				      <auto-complete source="loadTags($query)"></auto-complete>
-				    </tags-input>
-				</div>
-				<hr></hr>
-			</div>
-			<div class="col-md-4 text-center">
-				<h3>Contact Number</h3>
-				<input type="text" ng-model="article.contactNumber" placeholder="Exmple: 0486556622" class="form-control" >
-				<hr></hr>
-			</div>
-			<div class="col-md-4 text-center">
-				<h3>Email</h3>
-				<input type="email" name="article.email" placeholder="email@email.com.au" class="form-control" ng-model="email">
-				<hr></hr>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-md-12">
-				<button class="btn btn-primary btn-block" ng-click="create()" >Post Ad Now!</button>
-				<hr></hr>
-			</div>			
-		</div>
-
-		<div  ng-show="error">
-            <p class="bg-danger">{{error}}</p>
-        </div>
-
+</div>
 </div>

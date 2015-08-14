@@ -18,19 +18,20 @@
 	</script>
 
     
-	<div ng-include="'/common/views/header.tpl.html'"></div>
-	<div ng-view class="container-fluid greenbin-container"></div>
+	<!--div ng-include="'/common/views/header.tpl.html'"></div-->
+	<div ui-view class="container-fluid greenbin-container"></div>
 
 
 	<!-- angular libs -->
 	<script type="text/javascript" src="/lib/angular/angular.js"></script>
-	<script type="text/javascript" src="/lib/angular-route/angular-route.js"></script>
+	<script type="text/javascript" src="/lib/ui-router/release/angular-ui-router.min.js"></script>
 	<script type="text/javascript" src="/lib/angular-resource/angular-resource.js"></script>
 
-	<!-- angular 3rd party directives -->
+	<!-- angular 3rd party modules & directives -->
 	<script type="text/javascript" src="/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 	<script type="text/javascript" src="/lib/ng-tags-input/ng-tags-input.js"></script>
 	<script type="text/javascript" src="/lib/ngAutocomplete/src/ngAutocomplete.js"></script>
+	<!--script type="text/javascript" src="/lib/ngAnimate/js/angular-animate.min.js"></script-->
 
 
 	<!-- articles -->
