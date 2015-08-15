@@ -1,29 +1,29 @@
 var articles = require('../../app/controllers/articles.server.controller'),
-fs = require('fs'),
-mongoose = require('mongoose'),
-Image = mongoose.model('Image'),
-Article = mongoose.model('Article');
+    fs = require('fs'),
+    mongoose = require('mongoose'),
+    Image = mongoose.model('Image'),
+    Article = mongoose.model('Article');
 
 
 var getErrorMessage = function(err) {
     if (err.errors) {
         for (var errName in err.errors) {
-            if (err.errors[errName].message){
-               return err.errors[errName].message;
-           }
+            if (err.errors[errName].message) {
+                return err.errors[errName].message;
+            }
 
-       }
-   } else {
-    return 'Unknown server error';
-}
+        }
+    } else {
+        return 'Unknown server error';
+    }
 };
 
 
 exports.create = function(req, res) {
 
     Article.findById(req.body.articleId).exec(function(err, article) {
-        if (err){
-                return res.status(400).send({
+        if (err) {
+            return res.status(400).send({
                 message: getErrorMessage(err)
             });
         }
@@ -32,62 +32,61 @@ exports.create = function(req, res) {
                 message: 'Failed to load article ' + id
             });
         }
-            
-            var image = new Image();
-            image.data = fs.readFileSync(req.files.file.path);
-            image.contentType = req.files.file.mimetype;
-            image._article = article._id;
 
-            console.log('MIME type: ' + image.contentType);
+        var image = new Image();
+        image.data = fs.readFileSync(req.files.file.path);
+        image._article = article._id;
+        image.contentType = req.files.file.mimetype;
 
-            image.save(function(err) {
-                if (err) {
-                    return res.status(400).send({
-                        message: getErrorMessage(err)
-                    });
-                } else {
 
-                    res.set('Content-Type', image.contentType);
-                    res.status(200).send(image.data);
+        image.save(function(err) {
+            if (err) {
+                return res.status(400).send({
+                    message: getErrorMessage(err)
+                });
+            } else {
 
-                }
-            });
+
+
+                        res.send({imageId: image._id});
+                    
+
+
+            }
+        });
 
     });
 
 
 };
 
-/*exports.list = function(req, res) {
-    Article.find().sort('-created').populate('creator', 'firstName lastName fullName ').exec(function(err, articles) {
-        if (err) {
-            return res.status(400).send({
-                message: getErrorMessage(err)
-            });
-        } else {
-            res.json(articles);
-        }
+
+exports.read = function(req, res) {
+    res.set('Content-Type', req.image.contentType);
+    res.send(req.image.data);
+};
+
+exports.imageByID = function(req, res, next, id) {
+    Image.findById(id).exec(function(err, image) {
+        if (err) return next(err);
+        if (!image) return next(new Error('Failed to load image ' +
+            id));
+        req.image = image;
+        next();
     });
-};*/
+};
 
 
 
 exports.delete = function(req, res) {
-    var article = req.article;
-    article.remove(function(err) {
+    var image = req.image;
+    image.remove(function(err) {
         if (err) {
             return res.status(400).send({
                 message: getErrorMessage(err)
             });
         } else {
-            res.json(article);
+            res.status(200).end();
         }
     });
 };
-
-
-
-
-
-
-

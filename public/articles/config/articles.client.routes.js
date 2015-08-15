@@ -2,9 +2,18 @@ angular.module('articles').config(['$stateProvider',
 	function($stateProvider) {
 
 		$stateProvider
-        .state('articles_list', {
+       /* .state('articles_list', {
             url: '/articles',
             templateUrl: 'articles/views/articles-list.html',
+            controller: 'ListArticlesCtrl',
+            parent: 'app'
+        })*/
+
+        .state('articles_search_result', {
+            url: '/articles',
+            templateUrl: 'articles/views/articles-list.html',
+            controller:'SearchArticlesCtrl',
+            params: {'searchText':''},
             parent: 'app'
         })
 

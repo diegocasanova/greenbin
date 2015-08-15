@@ -8,7 +8,8 @@ session = require('express-session'),
 flash = require('connect-flash'),
 multer  = require('multer'),
 passport = require('passport'),
-autoReap  = require('multer-autoreap');
+autoReap  = require('multer-autoreap'),
+paginate = require('express-paginate');
 
 
 
@@ -48,6 +49,9 @@ module.exports = function(){
 		}
 	}));
 	app.use(autoReap);
+
+	// keep this before all routes that will use pagination
+	app.use(paginate.middleware(10, 50));
 
 	require('../app/routes/index.server.routes.js')(app);
 	require('../app/routes/users.server.routes.js')(app);

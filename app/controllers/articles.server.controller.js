@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
     Article = mongoose.model('Article'),
+    Image = mongoose.model('Image'),
     tags = [{
         "text": "Tag1"
     }, {
@@ -77,6 +78,76 @@ exports.list = function(req, res) {
     });
 };
 
+
+exports.listPaginated = function(req, res) {
+
+    Article.paginate({}, {
+        page: req.query.page,
+        limit: req.query.limit,
+        sortBy: {
+            created: -1
+        }
+    }, function(err, articles, pageCount, itemCount) {
+
+        if (err) {
+            return res.status(400).send({
+                message: getErrorMessage(err)
+            });
+        } else {
+
+            articles.forEach(function(article) {
+
+                populateFirstImage(article);
+
+            });
+
+
+            var result = {
+                itemCount: itemCount,
+                articles: articles
+            };
+            res.json(result);
+        }
+
+    });
+};
+
+exports.searchPaginated = function(req, res) {
+
+
+    Article.paginate(
+
+        { $text : { $search : req.query.text } },
+        
+    {
+        page: req.query.page,
+        limit: req.query.limit,
+
+    }, function(err, articles, pageCount, itemCount) {
+
+        if (err) {
+            return res.status(400).send({
+                message: getErrorMessage(err)
+            });
+        } else {
+
+            articles.forEach(function(article) {
+
+                populateFirstImage(article);
+
+            });
+
+
+            var result = {
+                itemCount: itemCount,
+                articles: articles
+            };
+            res.json(result);
+        }
+
+    });
+};
+
 exports.read = function(req, res) {
     res.json(req.article);
 };
@@ -135,3 +206,16 @@ exports.listTags = function(req, res) {
 exports.listConditions = function(req, res) {
     res.json(conditions);
 };
+
+
+function populateFirstImage(article) {
+    Image
+        .findOne({
+            _article: article._id
+        }, '_id')
+        .sort({ created: -1 })
+        .exec(function(err, image) {
+            if (err) return;
+            article.images.push(image);
+        });
+}

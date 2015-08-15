@@ -33,8 +33,5 @@ angular.module('common').controller('LoginCtrl', ['$scope','$http' ,'$location',
         });
   };
 
-  $scope.clearForm = function() {
-    $scope.user = {};
-  };
 
 }]);

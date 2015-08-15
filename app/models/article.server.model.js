@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
     validators = require('mongoose-validators'),
+    mongoosePaginate = require('mongoose-paginate'),
     Schema = mongoose.Schema;
 
 
@@ -61,4 +62,6 @@ var ArticleSchema = new Schema({
     tags: [],
     images : [{ type: Schema.Types.ObjectId, ref: 'Image' }]
 });
+ArticleSchema.plugin(mongoosePaginate);
+ArticleSchema.index({ title: 'text', description: 'text', tags: 'text'});
 mongoose.model('Article', ArticleSchema);

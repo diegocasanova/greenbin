@@ -3,8 +3,12 @@ var users = require('../../app/controllers/users.server.controller'),
     mongoosePaginate = require('mongoose-paginate');
 
 module.exports = function(app) {
+
+    app.route('/api/articles/search')
+        .get(articles.searchPaginated);
+
     app.route('/api/articles')
-        .get(articles.list)
+        .get(articles.listPaginated)
         .post(users.requiresLogin, articles.create);
     app.route('/api/articles/:articleId')
         .get(articles.read)
@@ -14,10 +18,11 @@ module.exports = function(app) {
             articles.delete);
     app.param('articleId', articles.articleByID);
 
+
     app.route('/api/tags')
         .get(articles.listTags);
 
     app.route('/api/conditions')
         .get(articles.listConditions);
 
-};
+};      

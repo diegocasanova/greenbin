@@ -1,6 +1,16 @@
-angular.module('articles').controller('ImagesCtrl', ['$scope', 'FileUploader', '$stateParams', function($scope, FileUploader, $stateParams) {
+angular.module('articles').controller('ImagesCtrl', ['$scope', 'FileUploader', '$stateParams', 'Images', function($scope, FileUploader, $stateParams, Images) {
         var uploader = new FileUploader({url:'/api/images', formData:[{articleId: $stateParams.articleId}]});
 
+        $scope.error = null;
+
+        $scope.remove = function(fileItem){
+            if (fileItem.imageId){
+               var image = new Images({_id:fileItem.imageId});
+               image.$remove(function() {
+                    fileItem.remove();
+                });
+            }
+        }; 
 
         uploader.filters.push({
             name: 'imageFilter',
@@ -11,40 +21,15 @@ angular.module('articles').controller('ImagesCtrl', ['$scope', 'FileUploader', '
         });
 
         // CALLBACKS
-
-        uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
-            console.info('onWhenAddingFileFailed', item, filter, options);
-        };
-        uploader.onAfterAddingFile = function(fileItem) {
-            console.info('onAfterAddingFile', fileItem);
-        };
-        uploader.onAfterAddingAll = function(addedFileItems) {
-            console.info('onAfterAddingAll', addedFileItems);
-        };
-        uploader.onBeforeUploadItem = function(item) {
-            console.info('onBeforeUploadItem', item);
-        };
-        uploader.onProgressItem = function(fileItem, progress) {
-            console.info('onProgressItem', fileItem, progress);
-        };
-        uploader.onProgressAll = function(progress) {
-            console.info('onProgressAll', progress);
-        };
         uploader.onSuccessItem = function(fileItem, response, status, headers) {
             console.info('onSuccessItem', fileItem, response, status, headers);
+            fileItem.imageId = response.imageId;
         };
         uploader.onErrorItem = function(fileItem, response, status, headers) {
             console.info('onErrorItem', fileItem, response, status, headers);
+            $scope.error = response.message;
         };
-        uploader.onCancelItem = function(fileItem, response, status, headers) {
-            console.info('onCancelItem', fileItem, response, status, headers);
-        };
-        uploader.onCompleteItem = function(fileItem, response, status, headers) {
-            console.info('onCompleteItem', fileItem, response, status, headers);
-        };
-        uploader.onCompleteAll = function() {
-            console.info('onCompleteAll');
-        };
+
 
         $scope.uploader = uploader;
 

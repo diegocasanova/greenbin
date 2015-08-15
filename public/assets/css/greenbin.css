@@ -7,3 +7,8 @@
 .timepicker-container table{
     margin: 0 auto;
 }
+
+.list-preview{
+	width: 100%;
+	height: 100%;
+}
