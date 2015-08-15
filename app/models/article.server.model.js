@@ -58,6 +58,7 @@ var ArticleSchema = new Schema({
         type: String,
         validate: validators.isNumeric({message: 'Please fill a valid contact number.'})
     },
-    tags: []
+    tags: [],
+    images : [{ type: Schema.Types.ObjectId, ref: 'Image' }]
 });
 mongoose.model('Article', ArticleSchema);

@@ -1,6 +1,6 @@
 angular.module('articles').controller('ArticlesCtrl',
-	['$scope', '$state', '$resource', 'Authentication', 'Articles',
-	function($scope, $state, $resource, Authentication, Articles)
+	['$scope', '$state', '$stateParams', '$resource', 'Authentication', 'Articles',
+	function($scope, $state, $stateParams, $resource, Authentication, Articles)
 	{
 
 		var conditions = $resource('/api/conditions');
@@ -35,6 +35,7 @@ angular.module('articles').controller('ArticlesCtrl',
 			});
 			article.$save(function(response) {
 				//$location.path('articles/' + response._id);
+				$scope.article.id = response._id;
 				$state.go('articles_create.form_images', {articleId: response._id});	
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
@@ -47,9 +48,9 @@ angular.module('articles').controller('ArticlesCtrl',
 		};
 
 		$scope.findOne = function() {
-		/*	$scope.article = Articles.get({
-				articleId: $routeParams.articleId
-			});*/
+			$scope.article = Articles.get({
+				articleId: $stateParams.articleId
+			});
 		};
 
 		$scope.update = function() {
@@ -71,16 +72,12 @@ angular.module('articles').controller('ArticlesCtrl',
 				});
 			} else {
 				$scope.article.$remove(function() {
-					$location.path('articles');
+					$state.go('articles_list');
 				});
 			}
 		};
 
 
-
-		$scope.processForm = function(){
-		//	$location.path('articles/' + response._id);
-		};
 	}
 	]);
 

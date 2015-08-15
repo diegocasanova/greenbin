@@ -1,12 +1,10 @@
-var fs = require('fs');
+var images = require('../../app/controllers/images.server.controller'),
+users = require('../../app/controllers/users.server.controller');
 
 module.exports = function(app){
 
 
-	app.post('/api/images',function(req,res){
-		console.log(req.files.file.path, req.body.articleId);
-		var img = fs.readFileSync(req.files.file.path);
-	    res.end(img, 'binary');
-	});
+	app.route('/api/images')
+        .post(users.requiresLogin, images.create);
 
 };

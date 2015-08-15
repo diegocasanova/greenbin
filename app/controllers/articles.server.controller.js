@@ -1,37 +1,53 @@
 var mongoose = require('mongoose'),
-Article = mongoose.model('Article'),
-tags = [
-    { "text": "Tag1" },
-    { "text": "Tag2" },
-    { "text": "Tag3" },
-    { "text": "Tag4" },
-    { "text": "Tag5" },
-    { "text": "Tag6" },
-    { "text": "Tag7" },
-    { "text": "Tag8" },
-    { "text": "Tag9" },
-    { "text": "Tag10" }
-    ],
+    Article = mongoose.model('Article'),
+    tags = [{
+        "text": "Tag1"
+    }, {
+        "text": "Tag2"
+    }, {
+        "text": "Tag3"
+    }, {
+        "text": "Tag4"
+    }, {
+        "text": "Tag5"
+    }, {
+        "text": "Tag6"
+    }, {
+        "text": "Tag7"
+    }, {
+        "text": "Tag8"
+    }, {
+        "text": "Tag9"
+    }, {
+        "text": "Tag10"
+    }],
 
-conditions = [    
-    { "value":"1", "label": "Need Fixing" },
-    { "value":"2", "label": "Need Minimun repair" },
-    { "value":"3", "label": "Ready to Use" },
-    { "value":"4", "label": "Like brand New!" }
-    ];
+    conditions = [{
+        "value": "1",
+        "label": "Need Fixing"
+    }, {
+        "value": "2",
+        "label": "Need Minimun repair"
+    }, {
+        "value": "3",
+        "label": "Ready to Use"
+    }, {
+        "value": "4",
+        "label": "Like brand New!"
+    }];
 
 
 var getErrorMessage = function(err) {
     if (err.errors) {
         for (var errName in err.errors) {
-            if (err.errors[errName].message){
-               return err.errors[errName].message;
-           }
+            if (err.errors[errName].message) {
+                return err.errors[errName].message;
+            }
 
-       }
-   } else {
-    return 'Unknown server error';
-}
+        }
+    } else {
+        return 'Unknown server error';
+    }
 };
 
 
@@ -98,7 +114,7 @@ exports.articleByID = function(req, res, next, id) {
         if (err) return next(err);
         if (!article) return next(new Error('Failed to load article ' +
             id));
-            req.article = article;
+        req.article = article;
         next();
     });
 };
@@ -119,6 +135,3 @@ exports.listTags = function(req, res) {
 exports.listConditions = function(req, res) {
     res.json(conditions);
 };
-
-
-

@@ -7,7 +7,8 @@ methodOverride = require('method-override'),
 session = require('express-session'),
 flash = require('connect-flash'),
 multer  = require('multer'),
-passport = require('passport');
+passport = require('passport'),
+autoReap  = require('multer-autoreap');
 
 
 
@@ -41,11 +42,12 @@ module.exports = function(){
 	app.use(passport.initialize());
 	app.use(passport.session());
 
-	app.use(multer({ dest: './uploads/',
+	app.use(multer({ dest: '/tmp/',
 		rename: function (fieldname, filename) {
 			return filename+Date.now();
 		}
 	}));
+	app.use(autoReap);
 
 	require('../app/routes/index.server.routes.js')(app);
 	require('../app/routes/users.server.routes.js')(app);

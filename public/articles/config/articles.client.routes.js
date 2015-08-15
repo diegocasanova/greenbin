@@ -4,13 +4,13 @@ angular.module('articles').config(['$stateProvider',
 		$stateProvider
         .state('articles_list', {
             url: '/articles',
-            templateUrl: 'articles/views/list-articles.client.view.html',
+            templateUrl: 'articles/views/articles-list.html',
             parent: 'app'
         })
 
         .state('articles_view', {
             url: '/articles/:articleId',
-            templateUrl: 'articles/views/view-article.client.view.html',
+            templateUrl: 'articles/views/articles-view.html',
             parent: 'app'
         })
 
