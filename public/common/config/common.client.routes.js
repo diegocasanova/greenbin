@@ -10,25 +10,19 @@ angular.module('common').config(['$stateProvider','$urlRouterProvider',
             url: '/signin',
             templateUrl: 'common/views/signin.tpl.html',
             parent: 'app'
-        })
-
-        .state('home', {
-            url: '/',
-            templateUrl: 'home/views/home.client.view.html',
-            parent: 'app'
         });
 
         $urlRouterProvider.otherwise('/');
 
 	}
 	]).
-run(['$rootScope','$location','Authentication',function($rootScope, $location, Authentication) {
+run(['$rootScope','$state','Authentication',function($rootScope, $state, Authentication) {
 	$rootScope.$on( "$stateChangeStart", function(event, toState, toParams, fromState, fromParams) {
-		if (!Authentication.isAuthenticated()) {
+		if (!Authentication.loggedUser) {
         // no logged user, redirect to /login
         if ( typeof toState.data != 'undefined' && toState.data.requiresLogin ) {
-
-        	$location.path("/signin");
+            event.preventDefault(); 
+        	$state.go('login');
         }
     }});
 }]);

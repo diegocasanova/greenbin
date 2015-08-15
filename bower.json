@@ -8,7 +8,9 @@
     "ng-tags-input": "~3.0.0",
     "angular-bootstrap": "~0.13.3",
     "ngAutocomplete": "~1.0.0",
-    "ui-router": "~0.2.15", 
-    "ngAnimate": "*"
+    "ui-router": "~0.2.15",
+    "ngAnimate": "*",
+    "angular-auto-focus": "~1.0.4",
+    "angular-file-upload": "~2.1.1"
   }
 }

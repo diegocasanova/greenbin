@@ -1,0 +1,83 @@
+<div class="row">
+		<div  ng-show="error">
+			<p class="bg-danger" tabindex="0" auto-focus>{{error}}</p>
+		</div>
+</div>
+
+
+<div class="row">
+	<div class="col-md-4 text-center">
+		<h3>Title</h3>
+		<input  type="text" 
+		placeholder="Exmple: Bicycle BMX Old School" 
+		popover="Generally, a shorter title is better"  
+		popover-trigger="focus" 
+		class="form-control"
+		ng-model="article.title"
+		>
+		<hr></hr>
+	</div>
+
+	<div class="col-md-4 text-center">
+		<h3>Item Condition</h3>
+		<div data-ng-controller="ButtonsCtrl">
+			<div class="btn-group">
+				<label data-ng-repeat="condition in conditions" class="btn btn-default btn-block" ng-model="article.condition" btn-radio="'{{condition.value}}'">{{condition.label}}</label>
+			</div>
+		</div>
+		<hr></hr>
+	</div>
+
+	<div class="col-md-4 text-center">
+		<h3>Description</h3>
+		<input type="text" 
+		placeholder="Some description about the item..." 
+		popover="Briefly explain pros and cons of this item"  
+		popover-trigger="focus" 
+		class="form-control"
+		ng-model="article.description"
+		>
+		<hr></hr>
+	</div>
+</div>
+
+<div class="row">
+
+	<div class="col-md-6 text-center">
+		<h3>Item Location</h3>
+		<div data-ng-controller="AutocompleteLocationCtrl">
+
+			<input class="form-control" type="text" ng-model="article.location"  ng-autocomplete options="options" details="details"/>
+
+			<p>autocomplete: {{data.ad.location}}</p>
+			<p>details (formatted address): {{details.formatted_address}}</p>
+			<p>details (lat lng): {{details.geometry.location}}</p>
+		</div>	
+		<hr></hr>	
+	</div>	
+
+		<div class="col-md-6 text-center">
+			<h3>Email</h3>
+			<input type="email" name="article.email" placeholder="email@email.com.au" class="form-control" ng-model="email">
+			<hr></hr>
+		</div>
+
+
+</div>
+
+
+<div class="row">
+			<!--div class="col-md-12">
+				<button class="btn btn-primary btn-block" ng-click="create()" >Post Ad Now!</button>
+				<hr></hr>
+			</div-->	
+
+			<div class="col-xs-6 col-xs-offset-3">
+				<a class="btn btn-default btn-block" ui-sref="articles_create.form_complementary">
+					Next <span class="glyphicon glyphicon-circle-arrow-right"></span>
+				</a>
+			</div>
+
+		</div>
+
+

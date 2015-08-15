@@ -16,7 +16,7 @@ angular.module('articles').config(['$stateProvider',
 
         .state('articles_create', {
             url: '/articles/create/form',
-            templateUrl: 'articles/views/create-article.client.view.html',
+            templateUrl: 'articles/views/articles-create.tpl.html',
             controller: 'ArticlesCtrl',
             parent: 'app',
             abstract: true,
@@ -24,15 +24,28 @@ angular.module('articles').config(['$stateProvider',
         
         .state('articles_create.form_main', {
             url: '/main',
-            templateUrl: 'articles/views/create-article-form-main.client.view.html',
+            templateUrl: 'articles/views/articles-create-form-main.html',
             data:{
             	requiresLogin:true
             }
         })
 
-        .state('articles_create.form_photo', {
-            url: '/photo',
-            templateUrl: 'articles/views/create-article-form-photos.client.view.html'
+        .state('articles_create.form_complementary', {
+            url: '/complementary',
+            templateUrl: 'articles/views/articles-create-form-complementary.html',
+            data:{
+                requiresLogin:true
+            }
+        })
+
+        .state('articles_create.form_images', {
+            url: '/images',
+            templateUrl: 'articles/views/articles-create-form-images.html',
+            controller:'ImagesCtrl',
+            params: {'articleId':''},
+            data:{
+                requiresLogin:true
+            }
         });
 
 	}

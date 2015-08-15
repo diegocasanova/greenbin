@@ -1,0 +1,66 @@
+<div class="row">
+	<div class="col-md-6 text-center">
+		<h3>Pick Up Date!</h3>
+		<div data-ng-controller="DatepickerDemoCtrl">
+			<div style="display:inline-block; min-height:50px;">
+				<datepicker ng-model="article.pickupDate" min-date="minDate" show-weeks="true" class="well well-sm" auto-focus></datepicker>
+			</div>
+		</div>
+		<hr></hr>    
+	</div>
+	<div class="col-md-6 text-center">	
+		<h3>Time!</h3>
+		<div data-ng-controller="TimepickerCtrl">
+
+			<div class="timepicker-container">
+				<timepicker ng-model="article.pickupTimeFrom" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+			</div>
+			<div class="timepicker-container">
+				<timepicker ng-model="article.pickupTimeTo" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+			</div>
+
+		</div>
+
+	</div>	
+</div>
+
+
+	<div class="row">
+		<div class="col-md-6 text-center">
+			<h3>Keywords / Tags</h3>
+			<div data-ng-controller="TagsMainCtrl">
+				<tags-input ng-model="article.tags" popover=""   popover-trigger="mouseenter">
+					<auto-complete source="loadTags($query)"></auto-complete>
+				</tags-input>
+				<hr></hr>
+			</div>
+		</div>
+		<div class="col-md-6 text-center">
+			<h3>Contact Number</h3>
+			<input type="text" ng-model="article.contactNumber" placeholder="Example: 0486556622" class="form-control" >
+			<hr></hr>
+		</div>
+
+	</div>
+
+	<div class="row">
+			<!--div class="col-md-12">
+				<button class="btn btn-primary btn-block" ng-click="create()" >Post Ad Now!</button>
+				<hr></hr>
+			</div-->	
+
+			<div class="col-xs-6">
+				<a class="btn btn-default btn-block" ui-sref="articles_create.form_main">
+					Back <span class="glyphicon glyphicon-circle-arrow-left"></span>
+				</a>
+			</div>
+
+
+			<div class="col-xs-6">
+				<a class="btn btn-default btn-block" ng-click="create()">
+					Next <span class="glyphicon glyphicon-circle-arrow-right"></span>
+				</a>
+			</div>
+
+		</div>
+
