@@ -101,7 +101,7 @@ angular.module('articles').controller('SearchArticlesCtrl', ['$scope', '$http', 
 
 		function getResultsPage(pageNumber) {
 			// this is just an example, in reality this stuff should be in a service
-			$http.get('api/articles/search?text='+  $stateParams.searchText  + '&page=' + pageNumber)
+			$http.get('api/articles/search?text=' + $stateParams.searchText + '&page=' + pageNumber)
 				.then(function(result) {
 					$scope.articles = result.data.articles;
 					$scope.totalArticles = result.data.itemCount;
@@ -212,14 +212,16 @@ angular.module('articles').controller('TagsMainCtrl', ['$scope', '$resource', fu
 		return tags.query().$promise;
 	};
 
-}]);
+}]);	
 
 
 
-function sanitizeTags(tags){
-	var sanitized = {};
-	tags.forEach(function(item){
-		sanitized.push(item[text]);
-	});
+function sanitizeTags(tags) {
+	var sanitized = [];
+	if (tags) {
+		tags.forEach(function(item) {
+			sanitized.push(item.text);
+		});
+	}
 	return sanitized;
 }
