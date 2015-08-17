@@ -11,6 +11,13 @@ angular.module('common').config(['$stateProvider','$urlRouterProvider',
             templateUrl: 'common/views/signin.tpl.html',
             parent: 'app',
             controller: 'LoginCtrl'
+        })
+
+        .state('signup', {
+            url: '/signup',
+            templateUrl: 'common/views/signup.tpl.html',
+            parent: 'app',
+            controller: 'SignUpCtrl'
         });
 
         $urlRouterProvider.otherwise('/');

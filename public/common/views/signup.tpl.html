@@ -1,24 +1,3 @@
-<!--<form name="form" novalidate class="login-form" ng-controller='LoginCtrl'>
-    <div class="modal-header">
-        <h4>Sign in</h4>
-    </div>
-    <div class="modal-body">
-        <div  ng-show="authError">
-            <p class="bg-danger">{{authError}}</p>
-        </div>
-        <div class="alert alert-info">Please enter your login details</div>
-        <label>E-mail</label>
-        <input name="login" type="email" ng-model="user.username" required autofocus>
-        <label>Password</label>
-        <input name="pass" type="password" ng-model="user.password" required>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary login" ng-click="login()" ng-disabled='form.$invalid'>Sign in</button>
-    </div>
-</form>-->
-
-
-
 
 <div class="col-md-6">
     <div  ng-show="authError">
@@ -26,7 +5,15 @@
     </div>
     <form>
         <div class="header">
-            <h4>Sign in</h4>
+            <h4>Sign up</h4>
+        </div>
+        <div class="form-group">
+            <label for="inputFirstName">First Name</label>
+            <input type="username" class="form-control" id="inputFirstName" placeholder="username" ng-model="user.firstName" required autofocus>
+        </div>
+            <div class="form-group">
+            <label for="inputLastName">Last Name</label>
+            <input type="username" class="form-control" id="inputLastName" placeholder="username" ng-model="user.lastName" required autofocus>
         </div>
         <div class="form-group">
             <label for="inputEmail">Email</label>
@@ -37,7 +24,7 @@
             <input type="password" class="form-control" id="inputPassword" placeholder="Password" ng-model="user.password" required>
         </div>
 
-        <button type="submit" class="btn btn-default" ng-click="login()">Login</button>
+        <button type="submit" class="btn btn-default" ng-click="signUp()">Sign Up!</button>
         <br><br>
 
         <div class="form-group form-inline">

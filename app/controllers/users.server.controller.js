@@ -82,17 +82,19 @@ exports.signup = function(req, res, next) {
         user.provider = 'local';
         user.save(function(err) {
             if (err) {
-                var message = getErrorMessage(err);
-                req.flash('error', message);
-                return res.redirect('/signup');
+                return res.status(400).send({
+                    message: getErrorMessage(err)
+                });
             }
             req.login(user, function(err) {
                 if (err) return next(err);
-                return res.redirect('/');
+                return res.send(user);
             });
         });
     } else {
-        return res.redirect('/');
+        return res.status(403).send({
+            message: 'Invalid parameters.'
+        });
     }
 };
 exports.signout = function(req, res) {
@@ -175,19 +177,20 @@ exports.requiresLogin = function(req, res, next) {
 
 
 exports.login = function(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
-    if (err) { return next(err); }
-    if (!user) { return res.status(403).send({message:'Invalid credentials.'}); }
-    req.logIn(user, function(err) {
-      if (err) { return next(err); }
-      return res.send(user);
-    });
-  })(req, res, next);
+    passport.authenticate('local', function(err, user, info) {
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+            return res.status(403).send({
+                message: 'Invalid credentials.'
+            });
+        }
+        req.logIn(user, function(err) {
+            if (err) {
+                return next(err);
+            }
+            return res.send(user);
+        });
+    })(req, res, next);
 };
-
-
-
-
-
-
-

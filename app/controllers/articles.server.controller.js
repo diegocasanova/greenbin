@@ -79,7 +79,7 @@ exports.list = function(req, res) {
 };
 
 
-exports.listLatest= function(req, res) {
+exports.listLatest = function(req, res) {
 
     Article.find().sort('-created').limit(5).exec(function(err, articles) {
         if (err) {
@@ -89,7 +89,9 @@ exports.listLatest= function(req, res) {
         } else {
 
             articles.forEach(function(article) {
-                populateFirstImage(article);
+                populateFirstImage(article).then(function(image) {
+                    article.images.push(image);
+                });
             });
             res.json(articles);
         }
@@ -134,35 +136,37 @@ exports.searchPaginated = function(req, res) {
 
     Article.paginate(
 
-        { $text : { $search : req.query.text } },
-        
-    {
-        page: req.query.page,
-        limit: req.query.limit,
+        {
+            $text: {
+                $search: req.query.text
+            }
+        },
 
-    }, function(err, articles, pageCount, itemCount) {
+        {
+            page: req.query.page,
+            limit: req.query.limit,
 
-        if (err) {
-            return res.status(400).send({
-                message: getErrorMessage(err)
-            });
-        } else {
+        },
+        function(err, articles, pageCount, itemCount) {
 
-            articles.forEach(function(article) {
-
-                populateFirstImage(article);
-
-            });
+            if (err) {
+                return res.status(400).send({
+                    message: getErrorMessage(err)
+                });
+            } else {
 
 
-            var result = {
-                itemCount: itemCount,
-                articles: articles
-            };
-            res.json(result);
-        }
+                populateImages(articles).then(function() {
+                    var result = {
+                        itemCount: itemCount,
+                        articles: articles
+                    };
+                    res.json(result);
+                });
 
-    });
+
+            }
+        });
 };
 
 exports.read = function(req, res) {
@@ -226,13 +230,40 @@ exports.listConditions = function(req, res) {
 
 
 function populateFirstImage(article) {
-    Image
-        .findOne({
-            _article: article._id
-        }, '_id')
-        .sort({ created: -1 })
-        .exec(function(err, image) {
-            if (err) return;
-            article.images.push(image);
-        });
+
+    return new Promise(function(resolve, reject) {
+
+            Image
+                .findOne({
+                    _article: article._id
+                }, '_id')
+                .sort({
+                    created: -1
+                })
+                .exec(function(err, image) {
+                    if (err) reject(Error(err));
+                    resolve(image);
+                });
+        }
+
+    );
+}
+
+
+
+function populateImages(articles) {
+
+    var promises = [];
+
+    articles.forEach(function(article) {
+
+        promises.push(
+            populateFirstImage(article).then(function(image) {
+                article.images.push(image);
+            })
+        );
+    });
+
+    return Promise.all(promises);
+
 }
