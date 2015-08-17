@@ -156,7 +156,7 @@ exports.searchPaginated = function(req, res) {
             } else {
 
 
-                populateImages(articles).then(function() {
+                populateFirstImages(articles).then(function() {
                     var result = {
                         itemCount: itemCount,
                         articles: articles
@@ -170,7 +170,19 @@ exports.searchPaginated = function(req, res) {
 };
 
 exports.read = function(req, res) {
-    res.json(req.article);
+
+    var article = req.article;
+
+    getArticleImages(article).then(function(images) {
+        article.images = images;
+        res.json(article);
+    }, function(err) {
+        res.status(400).send({
+            message: err
+        });
+    });
+
+
 };
 
 exports.update = function(req, res) {
@@ -229,7 +241,7 @@ exports.listConditions = function(req, res) {
 };
 
 
-function populateFirstImage(article) {
+function getFirstArticleImage(article) {
 
     return new Promise(function(resolve, reject) {
 
@@ -249,16 +261,35 @@ function populateFirstImage(article) {
     );
 }
 
+function getArticleImages(article) {
+    return new Promise(function(resolve, reject) {
+
+            Image
+                .find({
+                    _article: article._id
+                }, '_id')
+                .sort({
+                    created: -1
+                })
+                .exec(function(err, images) {
+                    if (err) reject(Error(err));
+                    resolve(images);
+                });
+        }
+
+    );
+}
 
 
-function populateImages(articles) {
+
+function populateFirstImages(articles) {
 
     var promises = [];
 
     articles.forEach(function(article) {
 
         promises.push(
-            populateFirstImage(article).then(function(image) {
+            getFirstArticleImage(article).then(function(image) {
                 article.images.push(image);
             })
         );

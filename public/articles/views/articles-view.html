@@ -1,4 +1,4 @@
-<section data-ng-init="findOne()">
+<!--section data-ng-init="findOne()">
 	<h1 data-ng-bind="article.title"></h1>
 	<div data-ng-show="authentication.loggedUser._id == article.creator._id">
 		<a href="/#!/articles/{{article._id}}/edit">edit</a>
@@ -14,4 +14,216 @@
 		<em data-ng-bind="article.creator.fullName"></em>
 	</small>
 	<p data-ng-bind="article.content"></p>
+</section-->
+
+<style type="text/css">
+.arrow {
+	cursor: pointer;
+	display: block;
+	height: 64px;
+	margin-top: -35px;
+	outline: medium none;
+	position: absolute;
+	top: 50%;
+	width: 64px;
+	z-index: 5;
+}
+.arrow.prev {
+	background-image: url("../assets/img/prev.png");
+	left: 20px;
+	opacity: 0.2;
+	transition: all 0.2s linear 0s;
+}
+.arrow.next {
+	background-image: url("../assets/img/next.png");
+	opacity: 0.2;
+	right: 20px;
+	transition: all 0.2s linear 0s;
+}
+.arrow.prev:hover{
+	opacity:1;
+}
+.arrow.next:hover{
+	opacity:1;
+}
+
+.nav {
+	bottom: -4px;
+	display: block;
+	height: 48px;
+	left: 0;
+	margin: 0 auto;
+	padding: 1em 0 0.8em;
+	position: absolute;
+	right: 0;
+	text-align: center;
+	width: 100%;
+	z-index: 5;
+}
+.nav li {
+	border: 5px solid #AAAAAA;
+	border-radius: 5px;
+	cursor: pointer;
+	display: inline-block;
+	height: 30px;
+	margin: 0 8px;
+	position: relative;
+	width: 50px;
+}
+.nav li.active {
+	border: 5px solid #FFFFFF;
+}
+.nav li img {
+	width: 100%;
+	height: 100%;
+}
+
+.slider {
+	border: 3px solid #FFFFFF;
+	border-radius: 5px;
+	height: 400px;
+	margin: 20px auto;
+	position: relative;
+	width: 100%;
+
+	-webkit-perspective: 1000px;
+	-moz-perspective: 1000px;
+	-ms-perspective: 1000px;
+	-o-perspective: 1000px;
+	perspective: 1000px;
+
+	-webkit-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	-ms-transform-style: preserve-3d;
+	-o-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+
+.slider img{
+	height: 100%;
+	width: 100%;
+}
+
+.slide {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.slide.ng-hide-add {
+	opacity:1;
+
+	-webkit-transition:1s linear all;
+	-moz-transition:1s linear all;
+	-o-transition:1s linear all;
+	transition:1s linear all;
+
+	-webkit-transform: rotateX(50deg) rotateY(30deg);
+	-moz-transform: rotateX(50deg) rotateY(30deg);
+	-ms-transform: rotateX(50deg) rotateY(30deg);
+	-o-transform: rotateX(50deg) rotateY(30deg);
+	transform: rotateX(50deg) rotateY(30deg);
+
+	-webkit-transform-origin: right top 0;
+	-moz-transform-origin: right top 0;
+	-ms-transform-origin: right top 0;
+	-o-transform-origin: right top 0;
+	transform-origin: right top 0;
+}
+.slide.ng-hide-add.ng-hide-add-active {
+	opacity:0;
+}
+.slide.ng-hide-remove {
+	-webkit-transition:1s linear all;
+	-moz-transition:1s linear all;
+	-o-transition:1s linear all;
+	transition:1s linear all;
+
+	display:block!important;
+	opacity:0;
+}
+.slide, .slide.ng-hide-remove.ng-hide-remove-active {
+	opacity:1;
+}
+
+
+</style>
+
+<section data-ng-init="findOne()">
+
+	<div class="row">
+
+		<div class="col-md-6 ">
+
+
+			<!-- slider container -->
+			<div class="slider">
+
+				<!-- enumerate all photos -->
+				<img ng-repeat="photo in photos" class="slide" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" ng-show="isActive($index)" ng-src="{{photo.src}}" />
+
+				<!-- prev / next controls -->
+				<a class="arrow prev" href="#" ng-click="showPrev()"></a>
+				<a class="arrow next" href="#" ng-click="showNext()"></a>
+
+				<!-- extra navigation controls -->
+				<ul class="nav">
+					<li ng-repeat="photo in photos" ng-class="{'active':isActive($index)}">
+						<img src="{{photo.src}}" alt="{{photo.desc}}" title="{{photo.desc}}" ng-click="showPhoto($index);" />
+					</li>
+				</ul>
+
+			</div>
+
+
+		</div>	
+
+		<div class="col-md-6 ">
+
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<h1 data-ng-bind="article.title"></h1>
+					<div class="article-description">
+						{{article.description}}
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+	</div>
+
+	<div class="row">
+
+
+		<div class="col-md-6" >
+
+
+			<div class="panel panel-default">
+				<div class="panel-heading">Contact Information</div>
+				<div class="panel-body">
+
+					<p>Posted on {{article.created | date:'mediumDate'}} by {{article.creator.fullName}}</p>
+					<p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;{{article.location[0]}}&nbsp;&nbsp;
+						<a href="" ng-click="showOnMap()" ng-hide="showMap">Show on Map</a>
+					</p>
+					<p><span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;{{article.pickupTimeFrom | date:'shortTime'}} to {{article.pickupTimeTo | date:'shortTime'}}</p>
+					<p><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;Pickup since {{article.pickupDate | date:'mediumDate'}}</p>
+				</div>
+			</div>
+
+			
+		</div>
+
+
+		<div class="col-md-6" ng-show="showMap">
+			<div id="newMap" style="height: 400px;"></div>
+		</div>
+
+	</div>
+
+
 </section>
+
+
+

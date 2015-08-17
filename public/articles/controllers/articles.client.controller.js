@@ -49,15 +49,6 @@ angular.module('articles').controller('ArticlesCtrl', ['$scope', '$state', '$sta
 			$scope.articles = Articles.query();
 		};
 
-		$scope.findOne = function() {
-			 Articles.get({
-				articleId: $stateParams.articleId
-			}, function(article){
-				$scope.article = article;
-				showMap(article.location);
-			});
-			
-		};
 
 		$scope.update = function() {
 			$scope.article.$update(function() {
@@ -222,7 +213,71 @@ angular.module('articles').controller('TagsMainCtrl', ['$scope', '$resource', fu
 }]);
 
 
-function showMap(location) {
+angular.module('articles').controller('ViewArticleCtrl', ['$scope', '$stateParams', 'Articles', function($scope, $stateParams, Articles) {
+
+	$scope.findOne = function() {
+		Articles.get({
+			articleId: $stateParams.articleId
+		}, function(article) {
+			$scope.article = article;
+			// Set of Photos
+			$scope.photos = getGalleryImageArray(article.images);
+		
+		});
+
+	};
+
+	$scope.showMap = false;
+
+	// initial image index
+	$scope._Index = 0;
+
+	// if a current image is the same as requested image
+	$scope.isActive = function(index) {
+		return $scope._Index === index;
+	};
+
+	// show prev image
+	$scope.showPrev = function() {
+		$scope._Index = ($scope._Index > 0) ? --$scope._Index : $scope.photos.length - 1;
+	};
+
+	// show next image
+	$scope.showNext = function() {
+		$scope._Index = ($scope._Index < $scope.photos.length - 1) ? ++$scope._Index : 0;
+	};
+
+	// show a certain image
+	$scope.showPhoto = function(index) {
+		$scope._Index = index;
+	};
+
+	
+	$scope.showOnMap = function() {
+		initMap($scope.article.location);
+		$scope.showMap = true;
+	};
+
+}]);
+
+
+function getGalleryImageArray(images) {
+
+	var array = [];
+
+	images.forEach(function(image) {
+		var entry = {
+			src: '/api/images/' + image
+		};
+		array.push(entry);
+	});
+
+	return array;
+}
+
+
+
+function initMap(location) {
 
 	var mapDiv = document.getElementById("newMap");
 
