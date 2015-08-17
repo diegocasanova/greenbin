@@ -10,11 +10,19 @@
           <a class="navbar-brand" href="/#!/">GreenBin</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse" >
+          <form class="navbar-form navbar-left" >
+                        <a href="/signout" class="btn btn-default" role="button" ng-show="isAuthenticated()">My Messages</a>
+              <a href="/signout" class="btn btn-default" role="button" ng-show="isAuthenticated()">My Articles</a>
+          </form>
           <form class="navbar-form navbar-right" >
             <div class="form-group">
+              <a class="btn btn-default" ui-sref="articles_create.form_main">Post an Ad!</a>
               <a ui-sref="login" class="btn btn-default" role="button" ng-hide="isAuthenticated()">Log in</a>
           	  <a href="/signout" class="btn btn-default" role="button" ng-show="isAuthenticated()">Log out</a>
             </div>
+          </form>
+          <form class="navbar-form navbar-right" ng-submit="search(searchText)">
+            <input type="text" class="form-control" placeholder="Search..." ng-model="searchText">
           </form>
         </div><!--/.navbar-collapse -->
       </div>

@@ -79,6 +79,23 @@ exports.list = function(req, res) {
 };
 
 
+exports.listLatest= function(req, res) {
+
+    Article.find().sort('-created').limit(5).exec(function(err, articles) {
+        if (err) {
+            return res.status(400).send({
+                message: getErrorMessage(err)
+            });
+        } else {
+
+            articles.forEach(function(article) {
+                populateFirstImage(article);
+            });
+            res.json(articles);
+        }
+    });
+};
+
 exports.listPaginated = function(req, res) {
 
     Article.paginate({}, {

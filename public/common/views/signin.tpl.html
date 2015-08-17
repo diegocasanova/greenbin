@@ -17,22 +17,7 @@
     </div>
 </form>-->
 
-<style type="text/css">
 
-
-#social-login-forms.horizontal button.twitter-button:before {
-    background-image: url(/assets/img/icons/twitter.svg);
-}
-
-#social-login-forms.horizontal button.facebook-button:before {
-    background-image: url(/assets/img/icons/facebook.svg);
-}
-
-#social-login-forms.horizontal button.google-button:before {
-    background-image: url(/assets/img/icons/google.svg);
-}
-
-</style>
 
 
 <div class="col-md-6">
@@ -52,7 +37,7 @@
             <input type="password" class="form-control" id="inputPassword" placeholder="Password" ng-model="user.password" required>
         </div>
 
-        <button type="submit" class="btn btn-default" ng-click="login()" ng-disabled='form.$invalid'>Login</button>
+        <button type="submit" class="btn btn-default" ng-click="login()">Login</button>
         <br><br>
 
         <div class="form-group form-inline">

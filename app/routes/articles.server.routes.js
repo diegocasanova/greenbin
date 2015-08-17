@@ -7,6 +7,9 @@ module.exports = function(app) {
     app.route('/api/articles/search')
         .get(articles.searchPaginated);
 
+    app.route('/api/articles/latest')
+        .get(articles.listLatest);
+
     app.route('/api/articles')
         .get(articles.listPaginated)
         .post(users.requiresLogin, articles.create);

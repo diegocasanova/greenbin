@@ -1,10 +1,18 @@
-angular.module('common').controller('HeaderCtrl', ['$scope', '$location','Authentication',
-  function ($scope, $location, Authentication) {
+angular.module('common').controller('HeaderCtrl', ['$scope', '$state','Authentication',
+  function ($scope, $state, Authentication) {
 
   Authentication.loggedUser = window.user;
-
-  $scope.location = $location;
   $scope.isAuthenticated = Authentication.isAuthenticated;
+
+  $scope.searchText = null;
+
+    $scope.search = function() {
+      if ($scope.searchText) {
+        $state.go('articles_search_result', {
+          searchText: $scope.searchText
+        });
+      }
+    };
 
 
 }]);
