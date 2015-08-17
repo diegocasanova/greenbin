@@ -1,4 +1,4 @@
-<form name="form" novalidate class="login-form" ng-controller='LoginCtrl'>
+<!--<form name="form" novalidate class="login-form" ng-controller='LoginCtrl'>
     <div class="modal-header">
         <h4>Sign in</h4>
     </div>
@@ -15,4 +15,52 @@
     <div class="modal-footer">
         <button class="btn btn-primary login" ng-click="login()" ng-disabled='form.$invalid'>Sign in</button>
     </div>
-</form>
+</form>-->
+
+<style type="text/css">
+
+
+#social-login-forms.horizontal button.twitter-button:before {
+    background-image: url(/assets/img/icons/twitter.svg);
+}
+
+#social-login-forms.horizontal button.facebook-button:before {
+    background-image: url(/assets/img/icons/facebook.svg);
+}
+
+#social-login-forms.horizontal button.google-button:before {
+    background-image: url(/assets/img/icons/google.svg);
+}
+
+</style>
+
+
+<div class="col-md-6">
+        <div  ng-show="authError">
+            <p class="bg-danger">{{authError}}</p>
+        </div>
+<form>
+        <div class="header">
+        <h4>Sign in</h4>
+        </div>
+        <div class="form-group">
+            <label for="inputEmail">Email</label>
+            <input type="email" class="form-control" id="inputEmail" placeholder="Email" ng-model="user.username" required autofocus>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword">Password</label>
+            <input type="password" class="form-control" id="inputPassword" placeholder="Password" ng-model="user.password" required>
+        </div>
+
+        <button type="submit" class="btn btn-default" ng-click="login()" ng-disabled='form.$invalid'>Login</button>
+        <br><br>
+
+        <div class="form-group form-inline">
+            <a href="/oauth/facebook" class="btn btn-default">Facebook</a>
+            <a href="/oauth/twitter" class="btn btn-default">Twitter</a>
+            <a href="/oauth/google" class="btn btn-default">Google</a>
+        </div>
+
+    </form>
+
+  </div>

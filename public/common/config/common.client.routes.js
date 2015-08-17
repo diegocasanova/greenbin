@@ -9,7 +9,8 @@ angular.module('common').config(['$stateProvider','$urlRouterProvider',
         .state('login', {
             url: '/signin',
             templateUrl: 'common/views/signin.tpl.html',
-            parent: 'app'
+            parent: 'app',
+            controller: 'LoginCtrl'
         });
 
         $urlRouterProvider.otherwise('/');
