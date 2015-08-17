@@ -213,16 +213,22 @@ angular.module('articles').controller('TagsMainCtrl', ['$scope', '$resource', fu
 }]);
 
 
-angular.module('articles').controller('ViewArticleCtrl', ['$scope', '$stateParams', 'Articles', function($scope, $stateParams, Articles) {
+angular.module('articles').controller('ViewArticleCtrl', ['$scope', '$stateParams', '$resource', 'Articles', 'Authentication', function($scope, $stateParams, $resource, Articles, Authentication) {
+
+	$scope.authentication = Authentication;
+	var conditions = $resource('/api/conditions').query();
 
 	$scope.findOne = function() {
 		Articles.get({
 			articleId: $stateParams.articleId
 		}, function(article) {
 			$scope.article = article;
+
+			$scope.article.itemCondition = conditions[article.condition].label;
+
 			// Set of Photos
 			$scope.photos = getGalleryImageArray(article.images);
-		
+
 		});
 
 	};
@@ -252,7 +258,7 @@ angular.module('articles').controller('ViewArticleCtrl', ['$scope', '$stateParam
 		$scope._Index = index;
 	};
 
-	
+
 	$scope.showOnMap = function() {
 		initMap($scope.article.location);
 		$scope.showMap = true;

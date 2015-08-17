@@ -56,7 +56,20 @@ angular.module('articles').config(['$stateProvider',
             data:{
                 requiresLogin:true
             }
-        });
+        })
+
+
+        .state('articles_edit', {
+            url: '/articles/edit/:articleId',
+            templateUrl: 'articles/views/articles-edit.html',
+            controller: 'ArticlesCtrl',
+            parent: 'app',
+            data:{
+                requiresLogin:true
+            }
+        })
+
+        ;
 
 	}
 	]);

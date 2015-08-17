@@ -24,16 +24,16 @@ var mongoose = require('mongoose'),
     }],
 
     conditions = [{
-        "value": "1",
+        "value": "0",
         "label": "Need Fixing"
     }, {
-        "value": "2",
+        "value": "1",
         "label": "Need Minimun repair"
     }, {
-        "value": "3",
+        "value": "2",
         "label": "Ready to Use"
     }, {
-        "value": "4",
+        "value": "3",
         "label": "Like brand New!"
     }];
 

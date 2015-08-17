@@ -48,7 +48,7 @@
 }
 
 .nav {
-	bottom: -4px;
+	bottom: 20px;
 	display: block;
 	height: 48px;
 	left: 0;
@@ -61,11 +61,11 @@
 	z-index: 5;
 }
 .nav li {
-	border: 5px solid #AAAAAA;
+	border: 2px solid #AAAAAA;
 	border-radius: 5px;
 	cursor: pointer;
 	display: inline-block;
-	height: 30px;
+	height: 50px;
 	margin: 0 8px;
 	position: relative;
 	width: 50px;
@@ -82,7 +82,7 @@
 	border: 3px solid #FFFFFF;
 	border-radius: 5px;
 	height: 400px;
-	margin: 20px auto;
+	margin: auto;
 	position: relative;
 	width: 100%;
 
@@ -92,11 +92,11 @@
 	-o-perspective: 1000px;
 	perspective: 1000px;
 
-	-webkit-transform-style: preserve-3d;
+/*	-webkit-transform-style: preserve-3d;
 	-moz-transform-style: preserve-3d;
 	-ms-transform-style: preserve-3d;
 	-o-transform-style: preserve-3d;
-	transform-style: preserve-3d;
+	transform-style: preserve-3d;*/
 }
 
 .slider img{
@@ -117,11 +117,11 @@
 	-o-transition:1s linear all;
 	transition:1s linear all;
 
-	-webkit-transform: rotateX(50deg) rotateY(30deg);
+/*	-webkit-transform: rotateX(50deg) rotateY(30deg);
 	-moz-transform: rotateX(50deg) rotateY(30deg);
 	-ms-transform: rotateX(50deg) rotateY(30deg);
 	-o-transform: rotateX(50deg) rotateY(30deg);
-	transform: rotateX(50deg) rotateY(30deg);
+	transform: rotateX(50deg) rotateY(30deg);*/
 
 	-webkit-transform-origin: right top 0;
 	-moz-transform-origin: right top 0;
@@ -181,9 +181,13 @@
 
 			<div class="panel panel-default">
 				<div class="panel-body">
+					<a ui-sref="articles_edit" class="btn btn-default btn-xs" role="button" data-ng-show="authentication.loggedUser._id == article.creator._id">Edit Article</a>
 					<h1 data-ng-bind="article.title"></h1>
 					<div class="article-description">
 						{{article.description}}
+					</div>
+					<div class="article-condition">
+						Condition: {{article.itemCondition}}
 					</div>
 				</div>
 			</div>
@@ -204,11 +208,27 @@
 				<div class="panel-body">
 
 					<p>Posted on {{article.created | date:'mediumDate'}} by {{article.creator.fullName}}</p>
+					<p ng-show="article.email"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;{{article.email}}</p>
 					<p><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;{{article.location[0]}}&nbsp;&nbsp;
 						<a href="" ng-click="showOnMap()" ng-hide="showMap">Show on Map</a>
 					</p>
+					<p ng-show="article.contactNumber"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>&nbsp;{{article.contactNumber}}</p>
 					<p><span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;{{article.pickupTimeFrom | date:'shortTime'}} to {{article.pickupTimeTo | date:'shortTime'}}</p>
-					<p><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;Pickup since {{article.pickupDate | date:'mediumDate'}}</p>
+					<p><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;Available {{article.pickupDate | date:'mediumDate'}}</p>
+				</div>
+			</div>
+
+
+			<div class="panel panel-default" ng-show="article.tags">
+				<div class="panel-heading">Tags</div>
+				<div class="panel-body">
+					<span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>
+
+						<span ng-repeat="tag in article.tags">
+							{{tag}}
+						</span>
+					</li>
+
 				</div>
 			</div>
 
