@@ -23,7 +23,10 @@ angular.module('articles').controller('ArticlesCtrl', ['$scope', '$state', '$sta
 				title: $scope.article.title,
 				condition: $scope.article.condition,
 				description: $scope.article.description,
-				location: $scope.article.location,
+				location: [$scope.article.location,
+					$scope.article.map.details.geometry.location.K,
+					$scope.article.map.details.geometry.location.G
+				],
 				pickupDate: $scope.article.pickupDate,
 				pickupTimeFrom: $scope.article.pickupTimeFrom,
 				pickupTimeTo: $scope.article.pickupTimeTo,
@@ -47,9 +50,13 @@ angular.module('articles').controller('ArticlesCtrl', ['$scope', '$state', '$sta
 		};
 
 		$scope.findOne = function() {
-			$scope.article = Articles.get({
+			 Articles.get({
 				articleId: $stateParams.articleId
+			}, function(article){
+				$scope.article = article;
+				showMap(article.location);
 			});
+			
 		};
 
 		$scope.update = function() {
@@ -212,7 +219,33 @@ angular.module('articles').controller('TagsMainCtrl', ['$scope', '$resource', fu
 		return tags.query().$promise;
 	};
 
-}]);	
+}]);
+
+
+function showMap(location) {
+
+	var mapDiv = document.getElementById("newMap");
+
+	if (mapDiv) {
+
+		var latlng = new google.maps.LatLng(Number(location[2]), Number(location[1]));
+
+		var mapOptions = {
+			zoom: 15,
+			center: latlng,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+
+		var map = new google.maps.Map(mapDiv, mapOptions);
+
+		var marker = new google.maps.Marker({
+			position: latlng,
+			map: map,
+			title: 'Item Location!'
+		});
+	}
+
+}
 
 
 

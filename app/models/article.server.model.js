@@ -28,9 +28,7 @@ var ArticleSchema = new Schema({
         required: 'Description cannot be blank'
     },
     location: {
-        type: String,
-        default: '',
-        trim: true,
+        type: [String],
         required: 'Location cannot be blank'
     },
     pickupDate: {
@@ -59,9 +57,16 @@ var ArticleSchema = new Schema({
         type: String,
         validate: validators.isNumeric({message: 'Please fill a valid contact number.'})
     },
-    tags: [],
+    tags: [String],
     images : [{ type: Schema.Types.ObjectId, ref: 'Image' }]
 });
+
+var LocationSchema = new Schema({
+    address: String,
+    lat: String,
+    long: String
+});
+
 ArticleSchema.plugin(mongoosePaginate);
 ArticleSchema.index({ title: 'text', description: 'text', tags: 'text'});
 mongoose.model('Article', ArticleSchema);

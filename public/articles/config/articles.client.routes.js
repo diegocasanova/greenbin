@@ -20,6 +20,7 @@ angular.module('articles').config(['$stateProvider',
         .state('articles_view', {
             url: '/articles/:articleId',
             templateUrl: 'articles/views/articles-view.html',
+            controller: 'ArticlesCtrl',
             parent: 'app'
         })
 

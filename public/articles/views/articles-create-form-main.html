@@ -47,11 +47,11 @@
 		<h3>Item Location</h3>
 		<div data-ng-controller="AutocompleteLocationCtrl">
 
-			<input class="form-control" type="text" ng-model="article.location"  ng-autocomplete options="options" details="details"/>
+			<input class="form-control" type="text"  ng-model="article.location" ng-autocomplete options="options" details="article.map.details"/>
 
-			<p>autocomplete: {{data.ad.location}}</p>
-			<p>details (formatted address): {{details.formatted_address}}</p>
-			<p>details (lat lng): {{details.geometry.location}}</p>
+			<p>autocomplete: {{article.location}}</p>
+			<p>details (formatted address): {{article.map.details.formatted_address}}</p>
+			<p>details (lat lng): {{article.map.details.geometry.location}}</p>
 		</div>	
 		<hr></hr>	
 	</div>	
