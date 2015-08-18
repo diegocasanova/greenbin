@@ -182,6 +182,9 @@
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<a ui-sref="articles_edit" class="btn btn-default btn-xs" role="button" data-ng-show="authentication.loggedUser._id == article.creator._id">Edit Article</a>
+					<a  class="btn btn-default btn-xs" role="button" data-ng-show="authentication.loggedUser._id == article.creator._id"
+					 ng-click="delete()" confirm="Are you sure?"
+					>Delete Article</a>
 					<h1 data-ng-bind="article.title"></h1>
 					<div class="article-description">
 						{{article.description}}

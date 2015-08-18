@@ -58,21 +58,6 @@ angular.module('articles').controller('ArticlesCtrl', ['$scope', '$state', '$sta
 			});
 		};
 
-		$scope.delete = function(article) {
-			if (article) {
-				article.$remove(function() {
-					for (var i in $scope.articles) {
-						if ($scope.articles[i] === article) {
-							$scope.articles.splice(i, 1);
-						}
-					}
-				});
-			} else {
-				$scope.article.$remove(function() {
-					$state.go('articles_list');
-				});
-			}
-		};
 
 
 	}
@@ -213,7 +198,7 @@ angular.module('articles').controller('TagsMainCtrl', ['$scope', '$resource', fu
 }]);
 
 
-angular.module('articles').controller('ViewArticleCtrl', ['$scope', '$stateParams', '$resource', 'Articles', 'Authentication', function($scope, $stateParams, $resource, Articles, Authentication) {
+angular.module('articles').controller('ViewArticleCtrl', ['$scope', '$state', '$stateParams', '$resource', 'Articles', 'Authentication', function($scope, $state, $stateParams, $resource, Articles, Authentication) {
 
 	$scope.authentication = Authentication;
 	var conditions = $resource('/api/conditions').query();
@@ -262,6 +247,22 @@ angular.module('articles').controller('ViewArticleCtrl', ['$scope', '$stateParam
 	$scope.showOnMap = function() {
 		initMap($scope.article.location);
 		$scope.showMap = true;
+	};
+
+	$scope.delete = function(article) {
+		if (article) {
+			article.$remove(function() {
+				for (var i in $scope.articles) {
+					if ($scope.articles[i] === article) {
+						$scope.articles.splice(i, 1);
+					}
+				}
+			});
+		} else {
+			$scope.article.$remove(function() {
+				$state.go('home');
+			});
+		}
 	};
 
 }]);

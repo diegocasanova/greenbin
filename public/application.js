@@ -1,5 +1,5 @@
 var mainApplicationModuleName = 'mean';
-var mainApplicationModule = angular.module(mainApplicationModuleName, ['ngResource', 'ui.router', 'ngTagsInput', 'ui.bootstrap', 'ngAutocomplete', 'mp.autoFocus', 'angularFileUpload', 'angularUtils.directives.dirPagination', 'ngTouch', 'users', 'common', 'home', 'articles']);
+var mainApplicationModule = angular.module(mainApplicationModuleName, ['ngResource', 'ui.router', 'ngTagsInput', 'ui.bootstrap', 'ngAutocomplete', 'mp.autoFocus', 'angularFileUpload', 'angularUtils.directives.dirPagination', 'ngTouch','angular-confirm', 'users', 'common', 'home', 'articles']);
 
 mainApplicationModule.config(['$locationProvider', function($locationProvider) {
 	$locationProvider.hashPrefix('!');

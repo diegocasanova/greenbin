@@ -25,6 +25,12 @@
         </div>
 
 
+        <div data-ng-hide="!articles || articles.length">
+			No articles yet, why don't you 
+			<a ui-sref="articles_create.form_main">create one</a>?
+		</div>
+
+
     <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
 </div>
 

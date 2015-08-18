@@ -133,16 +133,20 @@ exports.listPaginated = function(req, res) {
 
 exports.searchPaginated = function(req, res) {
 
+    var query = {};
 
-    Article.paginate(
+    if (req.query.text) {
 
-        {
+        query = {
             $text: {
                 $search: req.query.text
             }
-        },
+        };
+    }
 
-        {
+
+    Article.paginate(
+        query, {
             page: req.query.page,
             limit: req.query.limit,
 
@@ -202,15 +206,25 @@ exports.update = function(req, res) {
 
 exports.delete = function(req, res) {
     var article = req.article;
-    article.remove(function(err) {
-        if (err) {
-            return res.status(400).send({
-                message: getErrorMessage(err)
-            });
-        } else {
-            res.json(article);
-        }
+
+
+    //delete the article images
+    Image.find({
+        _article: article.id
+    }).remove(function() {
+        article.remove(function(err) {
+            if (err) {
+                return res.status(400).send({
+                    message: getErrorMessage(err)
+                });
+            } else {
+                res.json(article);
+            }
+        });
     });
+
+
+
 };
 
 exports.articleByID = function(req, res, next, id) {
