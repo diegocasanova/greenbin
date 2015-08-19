@@ -3,28 +3,43 @@
     <div  ng-show="authError">
         <p class="bg-danger">{{authError}}</p>
     </div>
-    <form>
+    <form name="myForm">
         <div class="header">
             <h4>Sign up</h4>
         </div>
         <div class="form-group">
             <label for="inputFirstName">First Name</label>
-            <input type="username" class="form-control" id="inputFirstName" placeholder="username" ng-model="user.firstName" required autofocus>
+            <input type="username" name="userFirstName" class="form-control" id="inputFirstName" placeholder="username" ng-model="user.firstName" maxlength=25 required autofocus>
+            <span style="color:red" ng-show="myForm.userFirstName.$dirty && myForm.userFirstName.$invalid">
+            <span ng-show="myForm.userFirstName.$error.required">First Name is required.</span>
         </div>
             <div class="form-group">
             <label for="inputLastName">Last Name</label>
-            <input type="username" class="form-control" id="inputLastName" placeholder="username" ng-model="user.lastName" required autofocus>
+            <input type="username" name="userLastName" class="form-control" id="inputLastName" 
+                   placeholder="username" ng-model="user.lastName" maxlength=25 required autofocus>
+            <span style="color:red" ng-show="myForm.userLastName.$dirty && myForm.userLastName.$invalid">
+            <span ng-show="myForm.userLastName.$error.required">Last Name is required.</span>
         </div>
         <div class="form-group">
             <label for="inputEmail">Email</label>
-            <input type="username" class="form-control" id="inputEmail" placeholder="username" ng-model="user.username" required autofocus>
+            <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email" ng-model="user.username" maxlength=30 required autofocus>
+            <span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
+                <span ng-show="myForm.email.$error.required">Email is required.</span>
+                <span ng-show="myForm.email.$error.email">Invalid email address.</span>
+            </span>
         </div>
         <div class="form-group">
             <label for="inputPassword">Password</label>
-            <input type="password" class="form-control" id="inputPassword" placeholder="Password" ng-model="user.password" required>
+            <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" ng-model="user.password" required>
+            <span style="color:red" ng-show="myForm.password.$dirty && myForm.password.$invalid">
+            <span ng-show="myForm.password.$error.required">First Name is required.</span>
         </div>
 
-        <button type="submit" class="btn btn-default" ng-click="signUp()">Sign Up!</button>
+        <button type="submit" class="btn btn-default" ng-click="signUp()" 
+            ng-disabled="myForm.userFirstName.$dirty && myForm.userFirstName.$invalid ||
+            myForm.email.$dirty && myForm.email.$invalid ||
+            myForm.userLastName.$dirty && myForm.userLastName.$invalid ||
+            myForm.password.$dirty && myForm.password.$invalid">Sign Up!</button>
         <br><br>
 
         <div class="form-group form-inline">
