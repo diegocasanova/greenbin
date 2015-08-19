@@ -80,7 +80,7 @@ angular.module('common').controller('MessagesCtrl', ['$scope', '$http', '$state'
 
       request.success(function(data, status, headers, config) {
         $scope.newMessage = '';
-        $scope.messages.push(message);
+        $scope.messages.push(data);
 
       }).error(function(data, status, headers, config) {
         $scope.error = data.message;
@@ -169,3 +169,10 @@ angular.module('common').controller('SignUpCtrl', ['$scope', '$http', '$state', 
 
   }
 ]);
+
+
+$(document).on('click','.navbar-collapse.in',function(e) {
+    if( $(e.target).is('a') ) {
+        $(this).collapse('hide');
+    }
+});

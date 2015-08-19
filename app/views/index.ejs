@@ -7,6 +7,7 @@
 	<title><%= title %></title>
 
 	<link rel="stylesheet" type="text/css" href="lib/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.superhero.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/greenbin.css">
 	<link rel="stylesheet" type="text/css" href="lib/ng-tags-input/ng-tags-input.css">
 
@@ -21,6 +22,11 @@
 	<!--div ng-include="'/common/views/header.tpl.html'"></div-->
 	<div ui-view class="container greenbin-container"></div>
 
+
+	<div ng-include="'/common/views/footer.tpl.html'"></div>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="/lib/jquery/dist/jquery.min.js"></script>
 
 	<!-- angular libs -->
 	<script type="text/javascript" src="/lib/angular/angular.js"></script>
@@ -66,8 +72,7 @@
 	<script type="text/javascript" src="/users/services/authentication.client.service.js"></script>
 
 
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="/lib/jquery/dist/jquery.min.js"></script>
+
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 	<!-- angular bootstrap -->

@@ -146,6 +146,7 @@
 }
 
 
+
 </style>
 
 <section data-ng-init="findOne()">
@@ -193,7 +194,7 @@
 					<a  class="btn btn-default btn-xs" role="button" data-ng-show="authentication.loggedUser._id == article.creator._id"
 					ng-click="delete()" confirm="Are you sure?"
 					>Delete Article</a>
-					<h1 data-ng-bind="article.title"></h1>
+					<h1 class="article-title" data-ng-bind="article.title"></h1>
 					<div class="article-description">
 						{{article.description}}
 					</div>
