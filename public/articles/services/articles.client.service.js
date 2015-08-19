@@ -7,4 +7,5 @@ angular.module('articles').factory('Articles', ['$resource',
 				method: 'PUT'
 			}
 		});
-	}]);
+	}
+]);

@@ -88,12 +88,14 @@ exports.listLatest = function(req, res) {
             });
         } else {
 
-            articles.forEach(function(article) {
-                populateFirstImage(article).then(function(image) {
-                    article.images.push(image);
+
+                populateFirstImages(articles).then(function() {
+                    var result = {
+                        itemCount: itemCount,
+                        articles: articles
+                    };
+                    res.json(result);
                 });
-            });
-            res.json(articles);
         }
     });
 };
@@ -114,21 +116,49 @@ exports.listPaginated = function(req, res) {
             });
         } else {
 
-            articles.forEach(function(article) {
 
-                populateFirstImage(article);
-
-            });
-
-
-            var result = {
-                itemCount: itemCount,
-                articles: articles
-            };
-            res.json(result);
+                populateFirstImages(articles).then(function() {
+                    var result = {
+                        itemCount: itemCount,
+                        articles: articles
+                    };
+                    res.json(result);
+                });
         }
 
     });
+};
+
+exports.listbyUserPaginated = function(req, res) {
+
+    var query = {creator : req.params.userId};
+
+    Article.paginate(
+        query, {
+            page: req.query.page,
+            limit: req.query.limit,
+
+        },
+        function(err, articles, pageCount, itemCount) {
+
+            if (err) {
+                return res.status(400).send({
+                    message: getErrorMessage(err)
+                });
+            } else {
+
+
+                populateFirstImages(articles).then(function() {
+                    var result = {
+                        itemCount: itemCount,
+                        articles: articles
+                    };
+                    res.json(result);
+                });
+
+
+            }
+        });
 };
 
 exports.searchPaginated = function(req, res) {
@@ -192,7 +222,16 @@ exports.read = function(req, res) {
 exports.update = function(req, res) {
     var article = req.article;
     article.title = req.body.title;
-    article.content = req.body.content;
+    article.condition = req.body.condition;
+    article.description = req.body.description;
+    article.location = req.body.location;
+    article.pickupDate = req.body.pickupDate;
+    article.pickupTimeFrom = req.body.pickupTimeFrom;
+    article.pickupTimeTo = req.body.pickupTimeTo;
+    article.email = req.body.email;
+    article.contactNumber = req.body.contactNumber;
+    article.tags = req.body.tags;
+
     article.save(function(err) {
         if (err) {
             return res.status(400).send({

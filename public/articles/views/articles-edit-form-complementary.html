@@ -25,40 +25,46 @@
 </div>
 
 
-	<div class="row">
-		<div class="col-md-6 text-center">
-			<h3>Keywords / Tags</h3>
-			<div data-ng-controller="TagsMainCtrl">
-				<tags-input ng-model="article.tags" popover=""   popover-trigger="mouseenter">
-					<auto-complete source="loadTags($query)"></auto-complete>
-				</tags-input>
-				<hr></hr>
-			</div>
-		</div>
-		<div class="col-md-6 text-center">
-			<h3>Contact Number</h3>
-			<input type="text" ng-model="article.contactNumber" placeholder="Example: 0486556622" class="form-control" >
-			<hr></hr>
-		</div>
-
+<div class="row">
+	<div class="col-md-6 text-center">
+		<h3>Keywords / Tags</h3>
+		<div data-ng-controller="TagsMainCtrl">
+			<tags-input ng-model="article.tags" popover=""   popover-trigger="mouseenter">
+			<auto-complete source="loadTags($query)"></auto-complete>
+		</tags-input>
+		<hr></hr>
 	</div>
+</div>
+<div class="col-md-6 text-center">
+	<h3>Contact Number</h3>
+	<input type="text" ng-model="article.contactNumber" placeholder="Example: 0486556622" class="form-control" >
+	<hr></hr>
+</div>
 
-	<div class="row">
+</div>
+
+<div class="row">
 			<!--div class="col-md-12">
 				<button class="btn btn-primary btn-block" ng-click="create()" >Post Ad Now!</button>
 				<hr></hr>
 			</div-->	
 
-			<div class="col-xs-6">
-				<a class="btn btn-default btn-block" ui-sref="articles_create.form_main">
+			<div class="col-xs-4">
+				<a class="btn btn-default btn-block" ui-sref="articles_edit.form_main">
 					Back <span class="glyphicon glyphicon-circle-arrow-left"></span>
 				</a>
 			</div>
 
 
-			<div class="col-xs-6">
-				<a class="btn btn-default btn-block" ng-click="create()">
+			<div class="col-xs-4">
+				<a class="btn btn-default btn-block" ui-sref="articles_edit.form_images">
 					Next <span class="glyphicon glyphicon-circle-arrow-right"></span>
+				</a>
+			</div>
+
+			<div class="col-xs-4">
+				<a class="btn btn-default btn-block" ng-click="update()">
+					Done! <span class="glyphicon glyphicon-ok"></span>
 				</a>
 			</div>
 

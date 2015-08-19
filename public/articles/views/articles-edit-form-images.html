@@ -1,17 +1,4 @@
  <style>
- .my-drop-zone { border: dotted 3px lightgray; }
- .nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
- .another-file-over-class { border: dotted 3px green; }
- /*html, body { height: 100%; }
- canvas {
-    background-color: #f3f3f3;
-    -webkit-box-shadow: 3px 3px 3px 0 #e3e3e3;
-    -moz-box-shadow: 3px 3px 3px 0 #e3e3e3;
-    box-shadow: 3px 3px 3px 0 #e3e3e3;
-    border: 1px solid #c3c3c3;
-    height: 100px;
-    margin: 6px 0 0 6px;
-}*/
 
 .btn-file {
     position: relative;
@@ -31,6 +18,10 @@
     background: white;
     cursor: inherit;
     display: block;
+}
+
+.preview-img{
+    height: 100px;
 }
 
 
@@ -88,7 +79,7 @@
 
 
         <span class="btn btn-default btn-file">
-            Browse <input type="file" multiple="true" class="" nv-file-select="" uploader="uploader">
+            New Image <input type="file" multiple="true" class="" nv-file-select="" uploader="uploader">
         </span>
 
         <table class="table">
@@ -102,9 +93,34 @@
                 </tr>
             </thead>
             <tbody>
+
+                <!-- loaded images -->
+                <tr ng-repeat="image in images track by $index">
+                    <td>
+
+                        <!-- Image preview -->
+                        <!--auto height-->
+                        <!--<div ng-thumb="{ file: item.file, width: 100 }"></div>-->
+                        <!--auto width-->
+                        <div><img ng-src="{{image.src}}" class="preview-img"/></div>
+                        <!--fixed width and height -->
+                        <!--<div ng-thumb="{ file: item.file, width: 100, height: 100 }"></div>-->
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-center">
+                        <span><i class="glyphicon glyphicon-ok"></i></span>
+                    </td>
+                    <td nowrap>
+                        <button type="button" class="btn btn-default btn-xs" ng-click="removeImage(image, $index)">
+                            <span class="glyphicon glyphicon-trash"></span> Remove
+                        </button>
+                    </td>
+                </tr>
+
+                <!-- new images -->
                 <tr ng-repeat="item in uploader.queue">
                     <td>
-                        <strong>{{ item.file.name }}</strong>
                         <!-- Image preview -->
                         <!--auto height-->
                         <!--<div ng-thumb="{ file: item.file, width: 100 }"></div>-->
@@ -152,7 +168,7 @@
 
 
             <div class="col-xs-6">
-                <a class="btn btn-default btn-block" ui-sref="articles_view({articleId: article.id})">
+                <a class="btn btn-default btn-block" ng-click="done()">
                     Done! <span class="glyphicon glyphicon-ok"></span>
                 </a>
             </div>

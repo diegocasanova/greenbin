@@ -11,7 +11,7 @@
       <!-- use ng-submit to catch the form submission and use our Angular function -->
       <form>
           <!-- our nested state views will be injected here -->
-          <div id="form-views" ui-view></div>
+          <div id="form-views" ui-view ng-init="findOne()"></div>
       </form>
 
 </div>

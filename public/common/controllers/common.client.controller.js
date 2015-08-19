@@ -14,7 +14,6 @@ angular.module('common').controller('HeaderCtrl', ['$scope', '$state', 'Authenti
       }
     };
 
-
   }
 ]);
 

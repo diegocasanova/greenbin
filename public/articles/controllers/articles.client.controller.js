@@ -50,23 +50,69 @@ angular.module('articles').controller('ArticlesCtrl', ['$scope', '$state', '$sta
 		};
 
 
-		$scope.update = function() {
-			$scope.article.$update(function() {
-				//		$location.path('articles/' + $scope.article._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
-
-
 
 	}
 ]);
 
 
+angular.module('articles').controller('EditArticleCtrl', ['$scope', '$state', '$stateParams', '$resource', 'Articles', 'Authentication', function($scope, $state, $stateParams, $resource, Articles, Authentication) {
 
-angular.module('articles').controller('SearchArticlesCtrl', ['$scope', '$http', '$stateParams', 'Articles',
-	function($scope, $http, $stateParams, Articles) {
+	$scope.authentication = Authentication;
+	var conditions = $resource('/api/conditions').query();
+
+	// Any error message from failing to create an article
+	$scope.error = null;
+
+	$scope.findOne = function() {
+		Articles.get({
+			articleId: $stateParams.articleId
+		}, function(article) {
+			$scope.article = article;
+			$scope.conditions = conditions;
+			$scope.originalLocation = article.location;
+			$scope.article.location = article.location[0];
+			// Set of Photos
+			$scope.images = getGalleryImageArray(article.images);
+
+		});
+
+	};
+
+	$scope.update = function() {
+
+		// Any error message from failing to create an article
+		$scope.error = null;
+
+		//update the location
+		var k = $scope.originalLocation[1];
+		var g = $scope.originalLocation[2];
+
+		if ($scope.article.map) {
+			k = $scope.article.map.details.geometry.location.K;
+			g = $scope.article.map.details.geometry.location.G;
+		}
+
+		$scope.article.location = [$scope.article.location, k, g];
+
+		$scope.article.tags = sanitizeTags($scope.article.tags);
+
+		$scope.article.$update(function() {
+			$state.go('articles_view', {
+				articleId: $scope.article._id
+			});
+		}, function(errorResponse) {
+			$scope.error = errorResponse.data.message;
+			$state.go('articles_edit.form_main');
+		});
+	};
+
+
+}]);
+
+
+
+angular.module('articles').controller('SearchArticlesCtrl', ['$scope', '$http', '$stateParams', 'Articles', 'url',
+	function($scope, $http, $stateParams, Articles, url) {
 
 
 		$scope.articles = [];
@@ -84,11 +130,12 @@ angular.module('articles').controller('SearchArticlesCtrl', ['$scope', '$http', 
 
 		function getResultsPage(pageNumber) {
 			// this is just an example, in reality this stuff should be in a service
-			$http.get('api/articles/search?text=' + $stateParams.searchText + '&page=' + pageNumber)
+			$http.get(url + pageNumber)
 				.then(function(result) {
 					$scope.articles = result.data.articles;
 					$scope.totalArticles = result.data.itemCount;
 				});
+
 		}
 
 		$scope.getImageLink = function(article) {
@@ -105,25 +152,88 @@ angular.module('articles').controller('SearchArticlesCtrl', ['$scope', '$http', 
 	}
 ]);
 
+angular.module('articles').controller('ViewArticleCtrl', ['$scope', '$state', '$stateParams', '$resource', 'Articles', 'Authentication', function($scope, $state, $stateParams, $resource, Articles, Authentication) {
 
+	$scope.authentication = Authentication;
+	var conditions = $resource('/api/conditions').query();
 
-angular.module('articles').controller('ButtonsCtrl', ['$scope', function($scope) {
-	$scope.singleModel = 1;
+	$scope.error = null;
 
-	$scope.radioModel = '3';
+	$scope.findOne = function() {
+		Articles.get({
+			articleId: $stateParams.articleId
+		}, function(article) {
+			$scope.article = article;
 
-	$scope.checkModel = {
-		'1': false,
-		'2': true,
-		'3': false,
-		'4': false
+			$scope.article.itemCondition = conditions[article.condition].label;
+
+			// Set of Photos
+			$scope.photos = getGalleryImageArray(article.images);
+			initMap($scope.article.location);
+
+		});
+
 	};
+
+	$scope.showMap = true;
+
+	
+
+	// initial image index
+	$scope._Index = 0;
+
+	// if a current image is the same as requested image
+	$scope.isActive = function(index) {
+		return $scope._Index === index;
+	};
+
+	// show prev image
+	$scope.showPrev = function() {
+		$scope._Index = ($scope._Index > 0) ? --$scope._Index : $scope.photos.length - 1;
+	};
+
+	// show next image
+	$scope.showNext = function() {
+		$scope._Index = ($scope._Index < $scope.photos.length - 1) ? ++$scope._Index : 0;
+	};
+
+	// show a certain image
+	$scope.showPhoto = function(index) {
+		$scope._Index = index;
+	};
+
+
+	$scope.showOnMap = function() {
+		$scope.showMap = true;
+		google.maps.event.trigger(map, 'resize');
+	};
+
+	$scope.delete = function(article) {
+		$scope.error = null;
+		if (article) {
+			article.$remove(function() {
+				for (var i in $scope.articles) {
+					if ($scope.articles[i] === article) {
+						$scope.articles.splice(i, 1);
+					}
+				}
+			});
+		} else {
+			$scope.article.$remove(function() {
+				$state.go('home');
+			},function(errorResponse) {
+			$scope.error = errorResponse.data.message;
+		});
+		}
+	};
+
 }]);
+
 
 
 angular.module('articles').controller('DatepickerDemoCtrl', ['$scope', function($scope) {
 
-	$scope.article.pickupDate = new Date();
+	$scope.article.pickupDate = $scope.article.pickupDate || new Date();
 
 	// Disable weekend selection
 	$scope.disabled = function(date, mode) {
@@ -173,8 +283,8 @@ angular.module('articles').controller('TimepickerCtrl', ['$scope', function($sco
 	to.setMinutes(0);
 
 
-	$scope.article.pickupTimeTo = to;
-	$scope.article.pickupTimeFrom = from;
+	$scope.article.pickupTimeTo = $scope.article.pickupTimeTo || to;
+	$scope.article.pickupTimeFrom = $scope.article.pickupTimeFrom || from;
 
 	$scope.hstep = 1;
 	$scope.mstep = 1;
@@ -198,75 +308,6 @@ angular.module('articles').controller('TagsMainCtrl', ['$scope', '$resource', fu
 }]);
 
 
-angular.module('articles').controller('ViewArticleCtrl', ['$scope', '$state', '$stateParams', '$resource', 'Articles', 'Authentication', function($scope, $state, $stateParams, $resource, Articles, Authentication) {
-
-	$scope.authentication = Authentication;
-	var conditions = $resource('/api/conditions').query();
-
-	$scope.findOne = function() {
-		Articles.get({
-			articleId: $stateParams.articleId
-		}, function(article) {
-			$scope.article = article;
-
-			$scope.article.itemCondition = conditions[article.condition].label;
-
-			// Set of Photos
-			$scope.photos = getGalleryImageArray(article.images);
-
-		});
-
-	};
-
-	$scope.showMap = false;
-
-	// initial image index
-	$scope._Index = 0;
-
-	// if a current image is the same as requested image
-	$scope.isActive = function(index) {
-		return $scope._Index === index;
-	};
-
-	// show prev image
-	$scope.showPrev = function() {
-		$scope._Index = ($scope._Index > 0) ? --$scope._Index : $scope.photos.length - 1;
-	};
-
-	// show next image
-	$scope.showNext = function() {
-		$scope._Index = ($scope._Index < $scope.photos.length - 1) ? ++$scope._Index : 0;
-	};
-
-	// show a certain image
-	$scope.showPhoto = function(index) {
-		$scope._Index = index;
-	};
-
-
-	$scope.showOnMap = function() {
-		initMap($scope.article.location);
-		$scope.showMap = true;
-	};
-
-	$scope.delete = function(article) {
-		if (article) {
-			article.$remove(function() {
-				for (var i in $scope.articles) {
-					if ($scope.articles[i] === article) {
-						$scope.articles.splice(i, 1);
-					}
-				}
-			});
-		} else {
-			$scope.article.$remove(function() {
-				$state.go('home');
-			});
-		}
-	};
-
-}]);
-
 
 function getGalleryImageArray(images) {
 
@@ -274,7 +315,8 @@ function getGalleryImageArray(images) {
 
 	images.forEach(function(image) {
 		var entry = {
-			src: '/api/images/' + image
+			src: '/api/images/' + image,
+			_id: image
 		};
 		array.push(entry);
 	});
@@ -298,13 +340,16 @@ function initMap(location) {
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
 
+
 		var map = new google.maps.Map(mapDiv, mapOptions);
+			
 
 		var marker = new google.maps.Marker({
 			position: latlng,
 			map: map,
 			title: 'Item Location!'
 		});
+
 	}
 
 }
@@ -315,7 +360,7 @@ function sanitizeTags(tags) {
 	var sanitized = [];
 	if (tags) {
 		tags.forEach(function(item) {
-			sanitized.push(item.text);
+			sanitized.push(item.text || item);
 		});
 	}
 	return sanitized;

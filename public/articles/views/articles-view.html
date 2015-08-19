@@ -151,6 +151,14 @@
 <section data-ng-init="findOne()">
 
 	<div class="row">
+		<div  ng-show="error">
+			<p class="bg-danger" tabindex="0" auto-focus>{{error}}</p>
+		</div>
+	</div>
+
+	<div class="row">
+
+
 
 		<div class="col-md-6 ">
 
@@ -181,9 +189,9 @@
 
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<a ui-sref="articles_edit" class="btn btn-default btn-xs" role="button" data-ng-show="authentication.loggedUser._id == article.creator._id">Edit Article</a>
+					<a ui-sref="articles_edit.form_main({articleId : article._id})" class="btn btn-default btn-xs" role="button" data-ng-show="authentication.loggedUser._id == article.creator._id">Edit Article</a>
 					<a  class="btn btn-default btn-xs" role="button" data-ng-show="authentication.loggedUser._id == article.creator._id"
-					 ng-click="delete()" confirm="Are you sure?"
+					ng-click="delete()" confirm="Are you sure?"
 					>Delete Article</a>
 					<h1 data-ng-bind="article.title"></h1>
 					<div class="article-description">
@@ -227,23 +235,23 @@
 				<div class="panel-body">
 					<span class="glyphicon glyphicon-tags" aria-hidden="true">&nbsp;</span>
 
-						<span ng-repeat="tag in article.tags">
-							{{tag}}
-						</span>
-					</li>
+					<span ng-repeat="tag in article.tags">
+						{{tag}}&nbsp;&nbsp;
+					</span>
+				</li>
 
-				</div>
 			</div>
-
-			
 		</div>
 
-
-		<div class="col-md-6" ng-show="showMap">
-			<div id="newMap" style="height: 400px;"></div>
-		</div>
 
 	</div>
+
+
+	<div class="col-md-6" ng-show="showMap">
+		<div id="newMap" style="height: 400px;"></div>
+	</div>
+
+</div>
 
 
 </section>

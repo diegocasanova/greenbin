@@ -4,6 +4,9 @@ var users = require('../../app/controllers/users.server.controller'),
 
 module.exports = function(app) {
 
+    app.route('/api/:userId/articles')
+        .get(articles.listbyUserPaginated);
+
     app.route('/api/articles/search')
         .get(articles.searchPaginated);
 
@@ -28,4 +31,4 @@ module.exports = function(app) {
     app.route('/api/conditions')
         .get(articles.listConditions);
 
-};      
+};

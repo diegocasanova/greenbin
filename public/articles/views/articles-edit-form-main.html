@@ -20,9 +20,13 @@
 
 	<div class="col-md-4 text-center">
 		<h3>Item Condition</h3>
-		<div data-ng-controller="ButtonsCtrl">
+		<div>
 			<div class="btn-group">
-				<label data-ng-repeat="condition in conditions" class="btn btn-default btn-block" ng-model="article.condition" btn-radio="'{{condition.value}}'">{{condition.label}}</label>
+				<label data-ng-repeat="condition in conditions" class="btn btn-default btn-block" ng-model="article.condition" btn-radio="'{{condition.value}}'"
+
+				ng-class="{select: condition.value == article.condition}"
+
+				>{{condition.label}}</label>
 			</div>
 		</div>
 		<hr></hr>
@@ -53,7 +57,7 @@
 
 	<div class="col-md-6 text-center">
 		<h3>Email</h3>
-		<input type="email" name="article.email" placeholder="email@email.com.au" class="form-control" ng-model="email">
+		<input type="email" name="article.email" placeholder="email@email.com.au" class="form-control" ng-model="article.email">
 		<hr></hr>
 	</div>
 
@@ -63,11 +67,23 @@
 
 <div class="row">
 
-	<div class="col-xs-6 col-xs-offset-3">
-		<a class="btn btn-default btn-block" ui-sref="articles_create.form_complementary">
+	<div class="col-xs-4">
+		<a class="btn btn-default btn-block" ui-sref="articles_edit.form_complementary">
 			Next <span class="glyphicon glyphicon-circle-arrow-right"></span>
 		</a>
 	</div>
+
+	<div class="col-xs-4">
+		<a class="btn btn-default btn-block" ui-sref="articles_edit.form_images">
+			Images <span class="glyphicon glyphicon-circle-arrow-right"></span>
+		</a>
+	</div>
+
+    <div class="col-xs-4">
+        <a class="btn btn-default btn-block" ng-click="update()">
+            Done! <span class="glyphicon glyphicon-ok"></span>
+        </a>
+    </div>
 
 </div>
 

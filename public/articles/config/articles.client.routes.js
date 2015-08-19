@@ -1,19 +1,34 @@
 angular.module('articles').config(['$stateProvider',
-	function($stateProvider) {
+    function($stateProvider) {
 
-		$stateProvider
-       /* .state('articles_list', {
-            url: '/articles',
-            templateUrl: 'articles/views/articles-list.html',
-            controller: 'ListArticlesCtrl',
-            parent: 'app'
-        })*/
+        $stateProvider
+            .state('my_articles', {
+                url: '/my_articles',
+                templateUrl: 'articles/views/articles-list.html',
+                controller: 'SearchArticlesCtrl',
+                resolve: {
+                    url: ['Authentication', function(Authentication) {
+                        return 'api/' + Authentication.loggedUser._id + '/articles?page=';
+                    }]
+                },
+                parent: 'app',
+                data: {
+                    requiresLogin: true
+                }
+            })
 
         .state('articles_search_result', {
             url: '/articles',
             templateUrl: 'articles/views/articles-list.html',
-            controller:'SearchArticlesCtrl',
-            params: {'searchText':''},
+            controller: 'SearchArticlesCtrl',
+            resolve: {
+                url: ['$stateParams', function($stateParams) {
+                    return 'api/articles/search?text=' + $stateParams.searchText + '&page=';
+                }]
+            },
+            params: {
+                'searchText': ''
+            },
             parent: 'app'
         })
 
@@ -31,45 +46,71 @@ angular.module('articles').config(['$stateProvider',
             parent: 'app',
             abstract: true,
         })
-        
+
         .state('articles_create.form_main', {
             url: '/main',
             templateUrl: 'articles/views/articles-create-form-main.html',
-            data:{
-            	requiresLogin:true
+            data: {
+                requiresLogin: true
             }
         })
 
         .state('articles_create.form_complementary', {
             url: '/complementary',
             templateUrl: 'articles/views/articles-create-form-complementary.html',
-            data:{
-                requiresLogin:true
+            data: {
+                requiresLogin: true
             }
         })
 
         .state('articles_create.form_images', {
             url: '/images',
             templateUrl: 'articles/views/articles-create-form-images.html',
-            controller:'ImagesCtrl',
-            params: {'articleId':''},
-            data:{
-                requiresLogin:true
+            controller: 'ImagesCtrl',
+            params: {
+                'articleId': ''
+            },
+            data: {
+                requiresLogin: true
             }
         })
 
 
         .state('articles_edit', {
             url: '/articles/edit/:articleId',
-            templateUrl: 'articles/views/articles-edit.html',
-            controller: 'ArticlesCtrl',
+            templateUrl: 'articles/views/articles-edit.tpl.html',
+            controller: 'EditArticleCtrl',
             parent: 'app',
-            data:{
-                requiresLogin:true
+            abstract: true
+        })
+
+        .state('articles_edit.form_main', {
+            url: '/main',
+            templateUrl: 'articles/views/articles-edit-form-main.html',
+            data: {
+                requiresLogin: true
             }
         })
 
-        ;
+        .state('articles_edit.form_complementary', {
+            url: '/complementary',
+            templateUrl: 'articles/views/articles-edit-form-complementary.html',
+            data: {
+                requiresLogin: true
+            }
+        })
 
-	}
-	]);
+        .state('articles_edit.form_images', {
+            url: '/images',
+            templateUrl: 'articles/views/articles-edit-form-images.html',
+            controller: 'ImagesCtrl',
+            params: {
+                'articleId': ''
+            },
+            data: {
+                requiresLogin: true
+            }
+        });
+
+    }
+]);

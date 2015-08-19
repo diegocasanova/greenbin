@@ -1,4 +1,4 @@
-angular.module('articles').controller('ImagesCtrl', ['$scope', 'FileUploader', '$stateParams', 'Images', function($scope, FileUploader, $stateParams, Images) {
+angular.module('articles').controller('ImagesCtrl', ['$scope', '$state','FileUploader', '$stateParams', 'Images', function($scope, $state, FileUploader, $stateParams, Images) {
         var uploader = new FileUploader({url:'/api/images', formData:[{articleId: $stateParams.articleId}]});
 
         $scope.error = null;
@@ -11,6 +11,22 @@ angular.module('articles').controller('ImagesCtrl', ['$scope', 'FileUploader', '
                 });
             }
         }; 
+
+        $scope.removeImage = function(item, index){
+            if (item){
+               var image = new Images({_id:item._id});
+               image.$remove(function() {
+                    $scope.$parent.images.splice(index,1);
+                });
+            }
+        }; 
+
+
+        $scope.done = function(){
+            $state.go('articles_view', {
+                articleId: $stateParams.articleId
+            });
+        };
 
         uploader.filters.push({
             name: 'imageFilter',
