@@ -46,11 +46,9 @@ exports.create = function(req, res) {
                 });
             } else {
 
-
-
-                        res.send({imageId: image._id});
-                    
-
+                res.send({
+                    imageId: image._id
+                });
 
             }
         });

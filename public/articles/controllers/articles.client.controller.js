@@ -171,6 +171,9 @@ angular.module('articles').controller('ViewArticleCtrl', ['$scope', '$state', '$
 			$scope.photos = getGalleryImageArray(article.images);
 			initMap($scope.article.location);
 
+
+			$state.transitionTo('articles_view.messages', {articleId : $scope.article._id, creatorId: $scope.article.creator._id});
+
 		});
 
 	};
