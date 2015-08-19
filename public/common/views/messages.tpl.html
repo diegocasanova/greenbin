@@ -1,0 +1,37 @@
+<style>
+	.message-posted-by{
+		margin-left: 20px;
+		font-size: smaller;
+	}
+
+	.new-msg-input{
+		width: 100%;
+	}
+</style>
+
+
+<div id="messeges" class="col-md-12" ng-init="find()">
+
+
+	<div class="panel panel-default" ng-show="article.tags">
+		<div class="panel-heading">Messages</div>
+		<div class="panel-body">
+			<div class="form-group" ng-show="authentication.isAuthenticated() && authentication.loggedUser._id != articleCreator">
+				<input class="new-msg-input" type="text" ng-model="newMessage"
+				placeholder="Questions or comments...?"/>
+				<button class="btn btn-default" type="button" ng-click="addMessage()" ng-disabled="!newMessage.length">Send!</button>
+			</div>
+
+
+			<div class="panel panel-default" ng-repeat="message in messages">
+				<div class="panel-body" >
+					{{message.content}}
+				</div>
+				<div class="message-posted-by">
+					Posted on {{message.created | date:'mediumDate'}} by {{message._from.fullName}}
+				</div>
+			</div>
+
+		</div>
+
+	</div>

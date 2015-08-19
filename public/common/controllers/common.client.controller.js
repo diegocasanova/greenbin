@@ -49,6 +49,58 @@ angular.module('common').controller('LoginCtrl', ['$scope', '$http', '$state', '
 ]);
 
 
+angular.module('common').controller('MessagesCtrl', ['$scope', '$http', '$state', '$stateParams', 'url', 'Authentication',
+  function($scope, $http, $state, $stateParams, url, Authentication) {
+
+    // The model for this form 
+    $scope.newMessage = '';
+
+    // Any error message from failing to login
+    $scope.error = null;
+
+
+    $scope.editable = $state.current.data.editable;
+
+    $scope.authentication = Authentication;
+    $scope.articleCreator = $stateParams.creatorId;
+
+
+    $scope.addMessage = function() {
+      // Clear any previous security errors
+      $scope.error = null;
+
+      var message = {
+        content : $scope.newMessage,
+        _article : $stateParams.articleId,
+        _to : $scope.articleCreator
+      };
+
+
+      var request = $http.post('/api/messages', message);
+
+      request.success(function(data, status, headers, config) {
+        $scope.newMessage = '';
+        $scope.messages.push(message);
+
+      }).error(function(data, status, headers, config) {
+        $scope.error = data.message;
+      });
+    };
+
+
+    $scope.find = function(){
+      $http.get(url)
+        .then(function(result) {
+          $scope.messages = result.data;
+        });
+
+    };
+
+
+  }
+]);
+
+
 angular.module('common').controller('SignUpCtrl', ['$scope', '$http', '$state', 'Authentication',
   function($scope, $http, $state, Authentication) {
 

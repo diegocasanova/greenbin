@@ -110,7 +110,25 @@ angular.module('articles').config(['$stateProvider',
             data: {
                 requiresLogin: true
             }
-        });
+        })
+
+        .state('articles_view.messages', {
+            url: '/messages',
+            templateUrl: 'common/views/messages.tpl.html',
+            controller: 'MessagesCtrl',
+            data: {editable: true},
+            params: {
+                'articleId': '',
+                'creatorId': ''
+            },
+            resolve: {
+                url: ['$stateParams', function($stateParams) {
+                    return 'api/messages/' + $stateParams.articleId;
+                }]
+            }
+        })
+
+        ;
 
     }
 ]);
