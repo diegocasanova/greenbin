@@ -2,25 +2,25 @@ var mongoose = require('mongoose'),
     Article = mongoose.model('Article'),
     Image = mongoose.model('Image'),
     tags = [{
-        "text": "Tag1"
+        "text": "T.V."
     }, {
-        "text": "Tag2"
+        "text": "Sofa"
     }, {
-        "text": "Tag3"
+        "text": "GYM"
     }, {
-        "text": "Tag4"
+        "text": "Table"
     }, {
-        "text": "Tag5"
+        "text": "Heater"
     }, {
-        "text": "Tag6"
+        "text": "Chair"
     }, {
-        "text": "Tag7"
+        "text": "Pallet"
     }, {
-        "text": "Tag8"
+        "text": "Radio"
     }, {
-        "text": "Tag9"
+        "text": "Rice Cooker"
     }, {
-        "text": "Tag10"
+        "text": "Mattress"
     }],
 
     conditions = [{
