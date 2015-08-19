@@ -14,6 +14,7 @@
 		popover-trigger="focus" 
 		class="form-control"
 		ng-model="article.title"
+		maxlength="50" 
 		>
 		<hr></hr>
 	</div>
@@ -40,6 +41,7 @@
 		popover-trigger="focus" 
 		class="form-control"
 		ng-model="article.description"
+		maxlength="350" 
 		>
 		<hr></hr>
 	</div>
@@ -57,7 +59,7 @@
 
 	<div class="col-md-6 text-center">
 		<h3>Email</h3>
-		<input type="email" name="article.email" placeholder="email@email.com.au" class="form-control" ng-model="article.email">
+		<input type="email" name="article.email" placeholder="email@email.com.au" class="form-control" ng-model="article.email" maxlength="70" >
 		<hr></hr>
 	</div>
 
