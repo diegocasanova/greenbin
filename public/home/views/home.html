@@ -1,17 +1,19 @@
-<section ng-controller="HomeCtrl">
-		<div class="row">
-			<div class="col-md-8">
-				<form class="form-inline">
-					<div class="form-group">
-						<label for="search">Search</label>
-						<input type="text" class="form-control" id="search" ng-model="searchText" required> 
-					</div>
-					<button type="submit" class="btn btn-default" required ng-click="search(searchText)">Search</button>
-				</form>
-			</div>
-			<div class="col-md-4">
-				<a class="btn btn-default" ui-sref="articles_create.form_main">Post an Ad!</a>
-			</div>
-		</div>
 
-</section>	
+<div class="container" style="background-color: WhiteSmoke;">
+  <div class="row"> 
+
+      <div ng-controller="CarouselDemoCtrl">
+        <div style="height: 305">
+          <carousel interval="myInterval">
+            <slide ng-repeat="slide in slides" active="slide.active">
+              <img ng-src="{{slide.image}}" style="margin:auto;">
+              <div class="carousel-caption">
+                <!--h4>Slide {{$index}}</h4-->
+                <p>{{slide.text}}</p>
+              </div>
+            </slide>
+          </carousel>
+        </div>
+   </div>
+  </div> 
+</div>  
