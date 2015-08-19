@@ -101,6 +101,42 @@ angular.module('common').controller('MessagesCtrl', ['$scope', '$http', '$state'
 ]);
 
 
+angular.module('common').controller('NotificationsCtrl', ['$scope', '$http', '$state', '$stateParams', 'Authentication',
+  function($scope, $http, $state, $stateParams, Authentication) {
+
+
+    $scope.authentication = Authentication;
+
+
+    $scope.check = function(message) {
+
+      $scope.error = null;
+      
+      var request = $http.put('/api/messages/' + message._id, message);
+
+      request.success(function(data, status, headers, config) {
+        
+        $scope.find();
+
+      }).error(function(data, status, headers, config) {
+        $scope.error = data.message;
+      });
+    };
+
+
+    $scope.find = function(){
+      $http.get('/api/messages')
+        .then(function(result) {
+          $scope.messages = result.data;
+        });
+
+    };
+
+
+  }
+]);
+
+
 angular.module('common').controller('SignUpCtrl', ['$scope', '$http', '$state', 'Authentication',
   function($scope, $http, $state, Authentication) {
 

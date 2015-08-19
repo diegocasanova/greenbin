@@ -1,0 +1,36 @@
+<style>
+	.message-posted-by{
+		margin-left: 20px;
+		font-size: smaller;
+	}
+
+	.new-msg-input{
+		width: 100%;
+	}
+
+	.panel-notifications{
+		text-align: left;
+	}
+</style>
+
+
+<div id="messeges" class="col-md-12" ng-init="find()">
+
+
+	<div class="panel panel-default">
+		<div class="panel-heading">Messages</div>
+		<div class="panel-body">
+
+			<div class="panel panel-notifications panel-default btn-block btn btn-default" ng-repeat="message in messages" ng-click="check(message)">
+				<div class="panel-body" >
+					{{message.content}}
+				</div>
+				<div class="message-posted-by">
+					Posted on {{message.created | date:'mediumDate'}} by {{message._from.fullName}} - 
+					<a ui-sref="articles_view({articleId: message._article._id})">{{message._article.title}}</a>
+				</div>
+			</div>
+
+		</div>
+
+	</div>

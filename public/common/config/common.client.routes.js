@@ -20,7 +20,15 @@ angular.module('common').config(['$stateProvider','$urlRouterProvider',
             controller: 'SignUpCtrl'
         })
 
-        ;
+        .state('my_notifications', {
+            url: '/notifications',
+            templateUrl: 'common/views/notifications.tpl.html',
+            controller: 'NotificationsCtrl',
+            parent: 'app',
+            data: {
+                requiresLogin: true
+            }
+        });
 
         $urlRouterProvider.otherwise('/');
 

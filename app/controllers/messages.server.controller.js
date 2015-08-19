@@ -72,7 +72,7 @@ exports.create = function(req, res) {
 };
 
 exports.listMyMessages = function(req, res) {
-    Message.find({_from:req.user, checked: false}).sort('-created').exec(function(err, articles) {
+    Message.find({_to:req.user, checked: false}).sort('-created').populate('_from', 'firstName lastName fullName').populate('_article', 'title').exec(function(err, articles) {
         if (err) {
             return res.status(400).send({
                 message: getErrorMessage(err)
@@ -93,6 +93,32 @@ exports.listByArticle = function(req, res) {
         } else {
             res.json(articles);
         }
+    });
+};
+
+
+exports.update = function(req, res) {
+    var message = req.message;
+    message.checked = true;
+
+    message.save(function(err) {
+        if (err) {
+            return res.status(400).send({
+                message: getErrorMessage(err)
+            });
+        } else {
+            res.json(message);
+        }
+    });
+};
+
+exports.messageByID = function(req, res, next, id) {
+    Message.findById(id).exec(function(err, message) {
+        if (err) return next(err);
+        if (!message) return next(new Error('Failed to load message ' +
+            id));
+        req.message = message;
+        next();
     });
 };
 

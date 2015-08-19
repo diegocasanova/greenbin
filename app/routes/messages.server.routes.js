@@ -9,8 +9,13 @@ module.exports = function(app) {
         .get(users.requiresLogin, messages.listMyMessages)
         .post(users.requiresLogin, messages.create);
 
-    app.route('/api/messages/:articleId')
+    app.route('/api/:articleId/messages/')
         .get(messages.listByArticle);
     app.param('articleId', articles.articleByID);
+
+
+    app.route('/api/messages/:messageId')
+        .put(users.requiresLogin, messages.update);
+    app.param('messageId', messages.messageByID);
 
 };

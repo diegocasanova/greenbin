@@ -123,7 +123,7 @@ angular.module('articles').config(['$stateProvider',
             },
             resolve: {
                 url: ['$stateParams', function($stateParams) {
-                    return 'api/messages/' + $stateParams.articleId;
+                    return 'api/'+ $stateParams.articleId +'/messages/';
                 }]
             }
         })
